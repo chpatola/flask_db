@@ -1,3 +1,4 @@
 .env
-startup.sh
+startup_db.sh
+startup_app.sh
 __pycache__
