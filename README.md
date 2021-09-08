@@ -26,6 +26,6 @@ This application enables persons interested in learning modern dance jazz to sig
  * USERS((pk) username:string, password:string, firstname:string, lastname:string, phone:string, bornyear:integer, usertype:string, removed: boolean) 
  * TEACHERS((pk) id:serial,firstname:string, lastname:string, email:string, hourlysalary:float)
  * ROOMS((pk) id:serial, m2:float, capacity:int)
- * COURSES((pk) id:serial, startdate:date, finishdate:date,time:time, durationhour:float, occurances:int, (fk) roomid -> Rooms)
+ * COURSES((pk) id:serial, startdate:date, finishdate:date,time:time, durationhour:float, occurances:int, (fk) teacherid -> Teachers, (fk) roomid -> Rooms)
  * COURSESENROLMENT((pk) id:serial, (fk) courseid -> Courses,(fk) userid -> Users - On delete set null)
  
