@@ -1,14 +1,32 @@
 <!doctype html>
 <html lang="en">
-<title>Aida Dance School - {% block title %}{% endblock %}</title>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Aida Dance School - {% block title %}{% endblock %}</title>
+    </head>
+
 <body>
-    <h1>Aida Dance School</h1>
-    <a href="/">Home</a>
-    <a href="/login">Log in</a>
-    <hr>
+    
+    <!-- Side navigation -->
+    <div class="sidenav">
+        <a href="/">Home</a>
+        <br>
+        <a href="/login">Log in</a>
+    </div>
+  
+  <!-- Page content -->
+  <div class="main">
+      <h1>Aida Dance School</h1>
     {% block content %}{% endblock %}
+  </div>
+
+    <!-- Page footer -->
+    <div class="footer">
     <hr>
     <i>Aida Dance School | Dance Road 11, 00678 DANCELIFE | + 48 456 234 08 | info[at]aidadanceschool.com </i>
+    <br>
+    </div>
 
 </body>
 </html>
