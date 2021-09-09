@@ -15,12 +15,36 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    sql = queries.all_courses
+    sql = queries.courses_all
     result = db.session.execute(sql)
     courses = result.fetchall()
-    for i in courses:
-         print(i.status)
+    if session.get("firstname"):
+        sql_user = queries.courses_user
+        result_user = db.session.execute(sql_user, {"user_id":session["username"]})
+        courses_user = result_user.fetchall()
+        return render_template("index.html",courses=courses,courses_user=courses_user)   
     return render_template("index.html",courses=courses)
+
+@app.route("/adduser", methods=["POST"])
+def adduser():
+    username = request.form["username"]
+    password = request.form["password"]
+    firstname = request.form["firstname"]
+    lastname = request.form["lastname"]
+    phone = request.form["phone"]
+    bornyear = request.form["bornyear"]
+
+    hash_value = generate_password_hash(password)
+
+    session["firstname"] = firstname
+    session["username"] = username
+    sql = "INSERT INTO userstest VALUES" \
+        "(:username, :password, :firstname, :lastname, :phone, :bornyear, :usertype, :removed)"
+    db.session.execute(sql, {"username":username, "password":hash_value,"firstname":firstname, "lastname":lastname,
+     "phone":phone, "bornyear":bornyear, "usertype":"student", "removed":False})
+    db.session.commit()
+    return redirect("/") 
+
 
 @app.route("/error")
 def error():
@@ -40,6 +64,7 @@ def login():
         hash_value = user.password
         if check_password_hash(hash_value, password):#the latter is the plaintext version
             session["firstname"] = user.firstname # here we set the session info
+            session["username"] = user.username # here we set the session info
             return redirect("/")
         else:
             return redirect("/error")   
@@ -47,28 +72,10 @@ def login():
 @app.route("/logout", methods=["POST"])
 def logout():
     del session["firstname"] # here we remove the session info
-    
+    del session["username"]
     return redirect("/")
 
 @app.route("/register", methods=["POST"])
 def register():
     return render_template("register.html")
 
-@app.route("/adduser", methods=["POST"])
-def adduser():
-    username = request.form["username"]
-    password = request.form["password"]
-    firstname = request.form["firstname"]
-    lastname = request.form["lastname"]
-    phone = request.form["phone"]
-    bornyear = request.form["bornyear"]
-
-    hash_value = generate_password_hash(password)
-
-    session["firstname"] = firstname
-    sql = "INSERT INTO userstest VALUES" \
-        "(:username, :password, :firstname, :lastname, :phone, :bornyear, :usertype, :removed)"
-    db.session.execute(sql, {"username":username, "password":hash_value,"firstname":firstname, "lastname":lastname,
-     "phone":phone, "bornyear":bornyear, "usertype":"student", "removed":False})
-    db.session.commit()
-    return redirect("/") 

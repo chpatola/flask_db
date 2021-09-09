@@ -4,23 +4,60 @@
 
 {% block content %}
 
-<h2>Welcome to Aida Dance School</h2>
-<p>Here you can soon see our upcoming courses.</p>
-<br>
+    <h2>Welcome to Aida Dance School</h2>
+    {% if session.firstname %} <!-- Landing page for logged in users-->
+        <h3>Your ongoing or upcoming courses</h3>
+        {% for course in courses_user %}
 
-{% for course in courses %}
+                <strong>{{course.name}}</strong> <br>
+                ID: {{ course.id }} <br>
+                Start date: {{course.startdate}} <br>
+                Time: {{ course.time }} <br>
+                Duration in hours: {{course.durationhour}} <br>
+                Occurances: {{course.occurances}} <br>
+                Teacher: {{course.teacher_name}} <br>
+                {{course.room_name}} <br>
+                <hr>
 
-    <strong>{{course.name}}</strong> <br>
-    ID: {{ course.id }} <br>
-    Start date: {{course.startdate}} <br>
-    Time: {{ course.time }} <br>
-    Duration in hours: {{course.durationhour}} <br>
-    Occurances: {{course.occurances}} <br>
-    Teacher: {{course.teacher_name}} <br>
-    {{course.room_name}} <br>
-    Status: {{course.status}} <br><br>
-    <hr>
+        {% endfor %}
+        <br>
+        <br>
+        <h3>All upcoming courses at Aida</h3>
 
-{% endfor %}
+        {% for course in courses %}
+
+                <strong>{{course.name}}</strong> <br>
+                ID: {{ course.id }} <br>
+                Start date: {{course.startdate}} <br>
+                Time: {{ course.time }} <br>
+                Duration in hours: {{course.durationhour}} <br>
+                Occurances: {{course.occurances}} <br>
+                Teacher: {{course.teacher_name}} <br>
+                {{course.room_name}} <br>
+                Status: {{course.status}} <br><br>
+                <hr>
+
+        {% endfor %}
+    
+    {% else %} <!-- Landing page for NOT logged in users-->
+        <p>Here you can see our upcoming courses.</p>
+        <br>
+
+        {% for course in courses %}
+
+            <strong>{{course.name}}</strong> <br>
+            ID: {{ course.id }} <br>
+            Start date: {{course.startdate}} <br>
+            Time: {{ course.time }} <br>
+            Duration in hours: {{course.durationhour}} <br>
+            Occurances: {{course.occurances}} <br>
+            Teacher: {{course.teacher_name}} <br>
+            {{course.room_name}} <br>
+            Status: {{course.status}} <br><br>
+            <hr>
+
+        {% endfor %}
+
+    {% endif %}
 
 {% endblock %}

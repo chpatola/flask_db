@@ -15,6 +15,9 @@
     display: block;
   }
   
+.sidenav a {
+  color: #818181;
+  }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
@@ -36,7 +39,7 @@ padding: 0px 10px;
     margin-left: 310px; /* Same as the width of the sidebar */
     padding: 0px 10px;
     position: fixed;
-    left: 0;
+    left: 10;
     bottom: 0;
 
 }

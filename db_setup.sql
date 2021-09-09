@@ -52,7 +52,18 @@ VALUES (
       1997,
       'student',
       FALSE
-   ) ON CONFLICT (username) DO NOTHING;
+   ),
+   (
+      'erik@heida.com',
+      'pbkdf2:sha256:150000$M70SLHTh$1e3de775805c644919b6179fc79fef23fb746c62c89b8d0339651191993dfe46',
+      'Erik',
+      'Gran',
+      '0457819',
+      2014,
+      'student',
+      FALSE
+   )
+    ON CONFLICT (username) DO NOTHING;
 
 INSERT INTO teacherstest (firstname, lastname, phone, email, hourlysalary)
 VALUES (
@@ -61,6 +72,13 @@ VALUES (
       '0421782',
       'johnnie@aida.com',
       60.50
+   ),
+   (
+      'Olivia',
+      'Newton-John',
+      '0421782',
+      'olivia@aida.com',
+      60.90
    ) ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO roomstest (name, m2, capacity)
@@ -96,8 +114,18 @@ VALUES (
       16,
       1,
       2
+   ),
+   (
+      'Advanced Steps',
+      '2021-01-09',
+      '2021-06-10',
+      '18:00',
+      2,
+      22,
+      17,
+      2
    ) ON CONFLICT (name, startdate, enddate, time, room_id) DO NOTHING;
 INSERT INTO courseenrolmentstest (course_id, user_id)
-VALUES (3, 'immi@hei.com') ON CONFLICT (course_id, user_id) DO NOTHING;
+VALUES (3, 'immi@hei.com'), (4, 'erik@heida.com') ON CONFLICT (course_id, user_id) DO NOTHING;
 
 
