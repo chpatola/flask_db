@@ -99,3 +99,5 @@ VALUES (
    ) ON CONFLICT (name, startdate, enddate, time, room_id) DO NOTHING;
 INSERT INTO courseenrolmentstest (course_id, user_id)
 VALUES (3, 'immi@hei.com') ON CONFLICT (course_id, user_id) DO NOTHING;
+
+

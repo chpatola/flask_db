@@ -1,7 +1,26 @@
 {% extends "layout.html" %}
 
 {% block title %}Home{% endblock %}
+
 {% block content %}
+
 <h2>Welcome to Aida Dance School</h2>
-Here you can soon see our upcoming courses.
+<p>Here you can soon see our upcoming courses.</p>
+<br>
+
+{% for course in courses %}
+
+    <strong>{{course.name}}</strong> <br>
+    ID: {{ course.id }} <br>
+    Start date: {{course.startdate}} <br>
+    Time: {{ course.time }} <br>
+    Duration in hours: {{course.durationhour}} <br>
+    Occurances: {{course.occurances}} <br>
+    Teacher: {{course.teacher_name}} <br>
+    {{course.room_name}} <br>
+    Status: {{course.status}} <br><br>
+    <hr>
+
+{% endfor %}
+
 {% endblock %}

@@ -1,4 +1,5 @@
 import os
+import sql_queries as queries
 from flask import Flask
 from flask import redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
@@ -14,7 +15,12 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    sql = queries.all_courses
+    result = db.session.execute(sql)
+    courses = result.fetchall()
+    for i in courses:
+         print(i.status)
+    return render_template("index.html",courses=courses)
 
 @app.route("/error")
 def error():
