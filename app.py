@@ -33,11 +33,12 @@ def login():
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):#the latter is the plaintext version
-            session["username"] = username
+            session["username"] = username # here we set the session info
             return redirect("/")
         else:
             return redirect("/error")   
 
-if __name__=="__main__":
-    app.run(host=os.getenv('IP', '0.0.0.0'), 
-            port=int(os.getenv('PORT', 4444)))
+@app.route("/logout", methods=["POST"])
+def logout():
+    del session["username"] # here we remove the session info
+    return redirect("/")
