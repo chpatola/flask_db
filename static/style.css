@@ -33,12 +33,10 @@ padding: 0px 10px;
 
 /* Style footer content */
 .footer {
-    margin-left: 160px; /* Same as the width of the sidebar */
+    margin-left: 310px; /* Same as the width of the sidebar */
     padding: 0px 10px;
     position: fixed;
     left: 0;
     bottom: 0;
 
 }
-  
-  

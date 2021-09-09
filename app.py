@@ -25,7 +25,7 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    sql = "SELECT username, password FROM userstest WHERE username=:username"
+    sql = "SELECT username, password, firstname FROM userstest WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()    
     if not user:
@@ -33,12 +33,36 @@ def login():
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):#the latter is the plaintext version
-            session["username"] = username # here we set the session info
+            session["firstname"] = user.firstname # here we set the session info
             return redirect("/")
         else:
             return redirect("/error")   
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    del session["username"] # here we remove the session info
+    del session["firstname"] # here we remove the session info
+    
     return redirect("/")
+
+@app.route("/register", methods=["POST"])
+def register():
+    return render_template("register.html")
+
+@app.route("/adduser", methods=["POST"])
+def adduser():
+    username = request.form["username"]
+    password = request.form["password"]
+    firstname = request.form["firstname"]
+    lastname = request.form["lastname"]
+    phone = request.form["phone"]
+    bornyear = request.form["bornyear"]
+
+    hash_value = generate_password_hash(password)
+
+    session["firstname"] = firstname
+    sql = "INSERT INTO userstest VALUES" \
+        "(:username, :password, :firstname, :lastname, :phone, :bornyear, :usertype, :removed)"
+    db.session.execute(sql, {"username":username, "password":hash_value,"firstname":firstname, "lastname":lastname,
+     "phone":phone, "bornyear":bornyear, "usertype":"student", "removed":False})
+    db.session.commit()
+    return redirect("/") 

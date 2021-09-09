@@ -13,12 +13,15 @@
         <p>
         <a href="/">Home</a>
         <br>
-        {% if session.username %}
-        <h2>Welcome {{session.username}}</h2>
+        {% if session.firstname %}
+
+        <h2>Welcome {{session.firstname}}</h2>
         <form action="/logout" method="POST">
             <input type="submit" value="Sign out">
             </form>
+
         {% else %}
+
         <form action="/login" method="POST">
             <p>Username/email:<br>
             <input type="email" name="username" class="textfields" > </p>
@@ -26,6 +29,11 @@
             <input type="password" name="password" class="textfields" ></p>
             <input type="submit" value="Sign in">
             </form>
+        <br>    
+        <form action="/register" method="POST">
+            <input type="submit" value="Register as new user">
+            </form>
+
             {% endif %}
         </p>
         

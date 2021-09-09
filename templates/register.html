@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+{% block content %}
+<h2>Please fill in the information below</h2>
+<form action="/adduser" method="POST">
+
+    <p>Email:<br>
+    <input type="email" name="username" class="textfields" > </p>
+    <p>Password:<br>
+    <input type="password" name="password" class="textfields" ></p>
+    <p>First name:<br>
+    <input type="text" name="firstname" required minlength="1" class="textfields" ></p>
+    <p>Last name:<br>
+    <input type="text" name="lastname" required minlength="1" class="textfields" ></p>
+    <p>Phone:<br>
+    <input type="tel" name="phone" minlength="6" class="textfields" ></p>
+    <p>Year of birth (only applies to children):<br>
+    <input type="number" name="bornyear" minlength="4" class="textfields" ></p>
+
+    <input type="submit" value="Register">
+    </form>
+{% endblock %}
