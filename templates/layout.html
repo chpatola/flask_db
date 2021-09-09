@@ -10,9 +10,22 @@
     
     <!-- Side navigation -->
     <div class="sidenav">
+        <p>
         <a href="/">Home</a>
         <br>
-        <a href="/login">Log in</a>
+        {% if session.username %}
+        <h2>Welcome {{session.username}}</h2>
+        {% else %}
+        <form action="/login" method="POST">
+            <p>Username/email:<br>
+            <input type="email" name="username" class="textfields" > </p>
+            <p>Password:<br>
+            <input type="password" name="password" class="textfields" ></p>
+            <input type="submit" value="Sign in">
+            </form>
+            {% endif %}
+        </p>
+        
     </div>
   
   <!-- Page content -->

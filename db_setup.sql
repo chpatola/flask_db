@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS teacherstest (
 );
 CREATE TABLE IF NOT EXISTS roomstest (
    id SERIAL PRIMARY KEY,
+   name VARCHAR (50) UNIQUE NOT NULL,
    m2 FLOAT,
    capacity INTEGER NOT NULL
 );
@@ -31,14 +32,14 @@ CREATE TABLE IF NOT EXISTS coursestest (
    durationhour FLOAT,
    occurances INTEGER,
    teacher_id INTEGER REFERENCES teacherstest,
-   room_id INTEGER REFERENCES roomstest
+   room_id INTEGER REFERENCES roomstest,
+   UNIQUE (name, startdate, enddate, time, room_id)
 );
 CREATE TABLE IF NOT EXISTS courseenrolmentstest (
    id SERIAL PRIMARY KEY,
    course_id INTEGER REFERENCES coursestest,
-   user_id VARCHAR(50) REFERENCES userstest ON DELETE
-   SET NULL,
-      UNIQUE (course_id, user_id)
+   user_id VARCHAR(50) REFERENCES userstest ON DELETE SET NULL,
+   UNIQUE (course_id, user_id)
 );
 --- INSERTS
 INSERT INTO userstest
@@ -62,8 +63,8 @@ VALUES (
       60.50
    ) ON CONFLICT (email) DO NOTHING;
 
-INSERT INTO roomstest (m2, capacity)
-VALUES (20.5, 8);
+INSERT INTO roomstest (name, m2, capacity)
+VALUES ('Room 1', 20.5, 8), ('Room 2', 30 ,12) ON CONFLICT (name) DO NOTHING;
 
 
 INSERT INTO coursestest (
@@ -85,6 +86,16 @@ VALUES (
       16,
       1,
       1
-   );
+   ),
+   (
+      'First Steps Class - Boys aged 8 - 10',
+      '2022-01-09',
+      '2022-04-10',
+      '16:00',
+      1,
+      16,
+      1,
+      2
+   ) ON CONFLICT (name, startdate, enddate, time, room_id) DO NOTHING;
 INSERT INTO courseenrolmentstest (course_id, user_id)
-VALUES (1, 'immi@hei.com') ON CONFLICT (course_id, user_id) DO NOTHING;
+VALUES (3, 'immi@hei.com') ON CONFLICT (course_id, user_id) DO NOTHING;
