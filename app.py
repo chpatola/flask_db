@@ -96,6 +96,10 @@ def registerteacher():
 def registeruser():
     return render_template("registeruser.html")
 
+@app.route("/removeuser")
+def removeuser():
+    return "We will soon remove your account =)"
+
 @app.route("/rooms")
 def rooms():
     sql = queries.rooms
@@ -110,3 +114,7 @@ def teachers():
     teachers = result.fetchall()
     print(teachers)
     return render_template("teachers.html",teachers=teachers)
+
+@app.route("/userprofile")
+def userprofile():
+    return render_template("userprofile.html")
