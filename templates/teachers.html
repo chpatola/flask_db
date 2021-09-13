@@ -3,6 +3,9 @@
 {% block title %}Teachers{% endblock %}
 
 {% block content %}
+<a href="/registerteacher">Add new teacher</a>
+<br>
+<hr>
 <h2>Our dance teachers</h2>
 
 {% for teacher in teachers %}
@@ -17,9 +20,5 @@
     <br>
 
 {% endfor %}
-<br>
-<hr>
-
-<a href="/registerteacher">Add new teacher</a>
 
 {% endblock %}

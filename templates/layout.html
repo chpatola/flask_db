@@ -7,6 +7,11 @@
     </head>
 
 <body>
+    <!-- Page header -->
+    <div class="header">
+        <h1>Aida Dance School</h1>
+        
+    </div>
     
     <!-- Side navigation -->
     <div class="sidenav">
@@ -39,7 +44,7 @@
             <input type="submit" value="Sign in">
             </form>
         <br>    
-        <form action="/register" method="POST">
+        <form action="/registeruser" method="POST">
             <input type="submit" value="Register as new user">
             </form>
 
@@ -50,13 +55,11 @@
   
   <!-- Page content -->
   <div class="main">
-      <h1>Aida Dance School</h1>
     {% block content %}{% endblock %}
   </div>
 
     <!-- Page footer -->
     <div class="footer">
-    <hr>
     <i>Aida Dance School | Dance Road 11, 00678 DANCELIFE | + 48 456 234 08 | info[at]aidadanceschool.com </i>
     <br>
     </div>

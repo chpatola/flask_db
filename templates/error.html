@@ -2,7 +2,12 @@
 
 {% block title %}Error{% endblock %}
 {% block content %}
-<h2>You entered an incorecct username or password, please try again.</h2>
+
+{% if session.usertype == 'student'%}
+    <h3>You are enrolled to an ongoing or upcoming course. Please remove the course registration before you can delete your account</h3>
+{% else %}
+    <h3>You entered an incorecct username or password, please try again.</h3>
+{% endif %}
 
 {% endblock %}
     

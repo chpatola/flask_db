@@ -7,45 +7,50 @@
     
     {% if session.usertype == 'student'%} <!-- Landing page for logged in students-->
         <h2>Welcome to Aida Dance School</h2>    
-        <h3>Your ongoing or upcoming courses</h3>
+        <h3>Your ongoing or upcoming courses:</h3>
         {% for course in courses_user %}
-
-                <strong>{{course.name}}</strong> <br>
-                ID: {{ course.id }} <br>
-                Start date: {{course.startdate}} <br>
-                Time: {{ course.time }} <br>
-                Duration in hours: {{course.durationhour}} <br>
-                Occurances: {{course.occurances}} <br>
-                Teacher: {{course.teacher_name}} <br>
-                {{course.room_name}} <br>
-                <hr>
+            <ul>
+                <li>
+                    <strong>{{course.name}}</strong> <br>
+                    ID: {{ course.id }} <br>
+                    Start date: {{course.startdate}} <br>
+                    Time: {{ course.time }} <br>
+                    Duration in hours: {{course.durationhour}} <br>
+                    Occurances: {{course.occurances}} <br>
+                    Teacher: {{course.teacher_name}} <br>
+                    {{course.room_name}} <br>
+                </li>
+            </ul>
+                
 
         {% endfor %}
-        <br>
-        <br>
-        <h3>All upcoming courses at Aida</h3>
+        <h3>All upcoming courses at Aida:</h3>
 
         {% for course in courses %}
+            <ul>
+                <li>
+                    <strong>{{course.name}}</strong> <br>
+                    ID: {{ course.id }} <br>
+                    Start date: {{course.startdate}} <br>
+                    Time: {{ course.time }} <br>
+                    Duration in hours: {{course.durationhour}} <br>
+                    Occurances: {{course.occurances}} <br>
+                    Teacher: {{course.teacher_name}} <br>
+                    {{course.room_name}} <br>
+                    Status: {{course.status}} <br>
 
-                <strong>{{course.name}}</strong> <br>
-                ID: {{ course.id }} <br>
-                Start date: {{course.startdate}} <br>
-                Time: {{ course.time }} <br>
-                Duration in hours: {{course.durationhour}} <br>
-                Occurances: {{course.occurances}} <br>
-                Teacher: {{course.teacher_name}} <br>
-                {{course.room_name}} <br>
-                Status: {{course.status}} <br><br>
-                <hr>
+                </li>
+            </ul>
+                
+                
 
         {% endfor %}
     
     {% else %} <!-- Landing page for NOT logged in users-->
-        <p>Here you can see our upcoming courses.</p>
-        <br>
+        <h3>Here you can see our upcoming courses.</h3>
 
         {% for course in courses %}
-
+            <hr>
             <strong>{{course.name}}</strong> <br>
             ID: {{ course.id }} <br>
             Start date: {{course.startdate}} <br>
@@ -55,7 +60,7 @@
             Teacher: {{course.teacher_name}} <br>
             {{course.room_name}} <br>
             Status: {{course.status}} <br><br>
-            <hr>
+           
 
         {% endfor %}
 

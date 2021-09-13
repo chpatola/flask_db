@@ -66,7 +66,7 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    sql = "SELECT username, password, firstname, usertype FROM userstest WHERE username=:username"
+    sql = queries.find_user
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()    
     if not user:
@@ -81,7 +81,7 @@ def login():
         else:
             return redirect("/error")   
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout",methods=["POST","GET"])
 def logout():
     del session["firstname"] # here we remove the session info
     del session["username"]
@@ -98,7 +98,15 @@ def registeruser():
 
 @app.route("/removeuser")
 def removeuser():
-    return "We will soon remove your account =)"
+    sql_users_course = queries.check_users_course
+    result_users_course = db.session.execute(sql_users_course,{"username":session["username"]})
+    users_courses = result_users_course.fetchone()
+    if users_courses[0]  > 0:
+        return render_template("error")
+    else: 
+        sql_remove = queries.remove_user
+        result= db.session.execute(sql_remove,{"username":session["username"]}) #does not work!
+        return redirect("/logout")
 
 @app.route("/rooms")
 def rooms():
@@ -112,7 +120,6 @@ def teachers():
     sql = queries.teachers
     result = db.session.execute(sql)
     teachers = result.fetchall()
-    print(teachers)
     return render_template("teachers.html",teachers=teachers)
 
 @app.route("/userprofile")

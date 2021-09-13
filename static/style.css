@@ -21,17 +21,26 @@
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-color: #f1f1f1;
+  color: #f1f1f1;
 }
 
 .textfields{
-  width: 200px;;
+    width: 200px;;
   }
-
+  /* Style header content */
+  .header {
+    margin-left: 310px;
+    padding:  25px 25px 25px 25px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 30px;
+  }
 /* Style page content */
 .main {
-margin-left: 310px; /* Same as the width of the sidebar */
-padding: 0px 10px;
+  margin-left: 310px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+  background-color: white; 
 }
 
 /* Style footer content */
@@ -41,5 +50,6 @@ padding: 0px 10px;
     position: fixed;
     left: 10;
     bottom: 0;
+    background-color: white; 
 
 }
