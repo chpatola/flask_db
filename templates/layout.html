@@ -11,11 +11,20 @@
     <!-- Side navigation -->
     <div class="sidenav">
         <p>
-        <a href="/">Home</a>
-        <br>
         {% if session.firstname %}
 
         <h2>Welcome {{session.firstname}}</h2>
+            {% if session.usertype == 'admin'%}
+            <h3><a href="/">Courses</a></h3>
+            <h3><a href="/">Teachers</a></h3>
+            <h3><a href="/rooms">Rooms</a></h3>
+
+            {% else %}
+            <h3><a href="/">Home</a></h3>
+            <h3><a href="/">My Profile</a></h3>
+        
+            {% endif %} 
+
         <form action="/logout" method="POST">
             <input type="submit" value="Sign out">
             </form>

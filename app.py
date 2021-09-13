@@ -38,6 +38,7 @@ def adduser():
 
     session["firstname"] = firstname
     session["username"] = username
+    session["usertype"] = 'student'
     sql = "INSERT INTO userstest VALUES" \
         "(:username, :password, :firstname, :lastname, :phone, :bornyear, :usertype, :removed)"
     db.session.execute(sql, {"username":username, "password":hash_value,"firstname":firstname, "lastname":lastname,
@@ -55,7 +56,7 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    sql = "SELECT username, password, firstname FROM userstest WHERE username=:username"
+    sql = "SELECT username, password, firstname, usertype FROM userstest WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()    
     if not user:
@@ -65,6 +66,7 @@ def login():
         if check_password_hash(hash_value, password):#the latter is the plaintext version
             session["firstname"] = user.firstname # here we set the session info
             session["username"] = user.username # here we set the session info
+            session["usertype"] = user.usertype # here we set the session info
             return redirect("/")
         else:
             return redirect("/error")   
@@ -73,9 +75,18 @@ def login():
 def logout():
     del session["firstname"] # here we remove the session info
     del session["username"]
+    del session["usertype"]
     return redirect("/")
 
 @app.route("/register", methods=["POST"])
 def register():
     return render_template("register.html")
+
+@app.route("/rooms")
+def rooms():
+    sql = queries.rooms
+    result = db.session.execute(sql)
+    rooms = result.fetchall()
+    print(rooms)
+    return render_template("rooms.html",rooms=rooms)
 

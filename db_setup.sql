@@ -63,6 +63,17 @@ VALUES (
       'student',
       FALSE
    )
+   ,
+   (
+      'info@aidadanceschool.com',
+      'pbkdf2:sha256:150000$1RTNARr3$2b28e981f26382a7c33e47f6d05603d7591a90feb85b449255e2e209c78a5216',
+      'Admin',
+      'Admin',
+      '048 456 234 08 ',
+      1995,
+      'admin',
+      FALSE
+   )
     ON CONFLICT (username) DO NOTHING;
 
 INSERT INTO teacherstest (firstname, lastname, phone, email, hourlysalary)
