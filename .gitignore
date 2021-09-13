@@ -1,4 +1,5 @@
 .env
 startup_db.sh
 startup_app.sh
+sql_queries copy.sql
 __pycache__
