@@ -16,7 +16,7 @@
         <h2>Welcome {{session.firstname}}</h2>
             {% if session.usertype == 'admin'%}
             <h3><a href="/">Courses</a></h3>
-            <h3><a href="/">Teachers</a></h3>
+            <h3><a href="/teachers">Teachers</a></h3>
             <h3><a href="/rooms">Rooms</a></h3>
 
             {% else %}

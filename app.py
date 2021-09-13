@@ -12,7 +12,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False #Supress warning
 db = SQLAlchemy(app)
 
-
 @app.route("/")
 def index():
     sql = queries.courses_all
@@ -24,6 +23,19 @@ def index():
         courses_user = result_user.fetchall()
         return render_template("index.html",courses=courses,courses_user=courses_user)   
     return render_template("index.html",courses=courses)
+
+@app.route("/addteacher",methods=["POST"])
+def addteacher():
+    firstname = request.form["firstname"]
+    lastname = request.form["lastname"]
+    phone = request.form["phone"]
+    email = request.form["email"]
+    hourlysalary = request.form["hourlysalary"]
+    sql = queries.add_teacher
+    db.session.execute(sql, {"firstname":firstname, "lastname":lastname,
+     "phone":phone, "email":email, "hourlysalary":hourlysalary})
+    db.session.commit()
+    return redirect("/teachers") 
 
 @app.route("/adduser", methods=["POST"])
 def adduser():
@@ -45,7 +57,6 @@ def adduser():
      "phone":phone, "bornyear":bornyear, "usertype":"student", "removed":False})
     db.session.commit()
     return redirect("/") 
-
 
 @app.route("/error")
 def error():
@@ -78,15 +89,25 @@ def logout():
     del session["usertype"]
     return redirect("/")
 
-@app.route("/register", methods=["POST"])
-def register():
-    return render_template("register.html")
+@app.route("/registerteacher")
+def registerteacher():
+    return render_template("registerteacher.html")
+
+@app.route("/registeruser", methods=["POST"])
+def registeruser():
+    return render_template("registeruser.html")
 
 @app.route("/rooms")
 def rooms():
     sql = queries.rooms
     result = db.session.execute(sql)
     rooms = result.fetchall()
-    print(rooms)
     return render_template("rooms.html",rooms=rooms)
 
+@app.route("/teachers")
+def teachers():
+    sql = queries.teachers
+    result = db.session.execute(sql)
+    teachers = result.fetchall()
+    print(teachers)
+    return render_template("teachers.html",teachers=teachers)

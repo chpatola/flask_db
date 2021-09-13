@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}Teachers{% endblock %}
+
+{% block content %}
+<h2>Our dance teachers</h2>
+
+{% for teacher in teachers %}
+
+    <strong>ID</strong> {{ teacher.id }} 
+    <strong>Last name:</strong> {{teacher.lastname }}
+    <strong>First name:</strong> {{teacher.firstname }} 
+    <strong>Phone:</strong> {{teacher.phone }} 
+    <strong>Email:</strong> {{teacher.email }}
+    <strong>Salary € / h:</strong> {{teacher.hourlysalary }} 
+    <br>
+    <br>
+
+{% endfor %}
+<br>
+<hr>
+
+<a href="/registerteacher">Add new teacher</a>
+
+{% endblock %}
