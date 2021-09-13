@@ -51,8 +51,7 @@ def adduser():
     session["firstname"] = firstname
     session["username"] = username
     session["usertype"] = 'student'
-    sql = "INSERT INTO userstest VALUES" \
-        "(:username, :password, :firstname, :lastname, :phone, :bornyear, :usertype, :removed)"
+    sql = queries.add_user
     db.session.execute(sql, {"username":username, "password":hash_value,"firstname":firstname, "lastname":lastname,
      "phone":phone, "bornyear":bornyear, "usertype":"student", "removed":False})
     db.session.commit()

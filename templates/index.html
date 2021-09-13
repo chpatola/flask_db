@@ -4,8 +4,9 @@
 
 {% block content %}
 
-    <h2>Welcome to Aida Dance School</h2>
-    {% if session.firstname %} <!-- Landing page for logged in users-->
+    
+    {% if session.usertype == 'student'%} <!-- Landing page for logged in students-->
+        <h2>Welcome to Aida Dance School</h2>    
         <h3>Your ongoing or upcoming courses</h3>
         {% for course in courses_user %}
 
