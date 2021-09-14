@@ -5,6 +5,7 @@ from flask import redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from werkzeug.security import check_password_hash, generate_password_hash
+from datetime import date
 
 app = Flask(__name__)
 app.secret_key = getenv("SECRET_KEY")
@@ -21,7 +22,7 @@ def index():
         sql_user = queries.courses_user
         result_user = db.session.execute(sql_user, {"user_id":session["username"]})
         courses_user = result_user.fetchall()
-        return render_template("index.html",courses=courses,courses_user=courses_user)   
+        return render_template("index.html",courses=courses,courses_user=courses_user, today=date.today())   
     return render_template("index.html",courses=courses)
 
 @app.route("/addteacher",methods=["POST"])
@@ -56,6 +57,13 @@ def adduser():
      "phone":phone, "bornyear":bornyear, "usertype":"student", "removed":False})
     db.session.commit()
     return redirect("/") 
+
+@app.route("/disenrolcourse/<int:id>")
+def disenrolcourse(id):
+    sql = queries.disenrol_course
+    db.session.execute(sql, {"username":session["username"],"id":id})
+    db.session.commit()
+    return redirect("/")
 
 @app.route("/enrolcourse/<int:id>")
 def enrolcourse(id):

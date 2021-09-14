@@ -13,12 +13,16 @@
                 <li>
                     <strong>{{course.name}}</strong> <br>
                     Start date: {{course.startdate}} <br>
+                    End date: {{course.enddate}} <br>
                     Time: {{ course.time }} <br>
                     Duration in hours: {{course.durationhour}} <br>
                     Occurances: {{course.occurances}} <br>
                     Teacher: {{course.teacher_name}} <br>
                     {{course.room_name}} <br>
                     Price: {{course.price}} <br>
+                    {% if course.startdate > today %}
+                    <a href="/disenrolcourse/{{ course.id }}">Disenrol</a> <br>
+                    {% endif %}
                 </li>
             </ul>
 
@@ -31,6 +35,7 @@
                     <strong>{{course.name}}</strong> <br>
                     ID: {{ course.id }} <br>
                     Start date: {{course.startdate}} <br>
+                    End date: {{course.enddate}} <br>
                     Time: {{ course.time }} <br>
                     Duration in hours: {{course.durationhour}} <br>
                     Occurances: {{course.occurances}} <br>
