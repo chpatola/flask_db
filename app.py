@@ -105,7 +105,8 @@ def removeuser():
         return render_template("error")
     else: 
         sql_remove = queries.remove_user
-        result= db.session.execute(sql_remove,{"username":session["username"]}) #does not work!
+        db.session.execute(sql_remove,{"username":session["username"]})
+        db.session.commit()
         return redirect("/logout")
 
 @app.route("/rooms")

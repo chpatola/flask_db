@@ -3,7 +3,7 @@ An application made within the course "Tietokantasovellus" at University of Hels
 
 ## About
 
-This application enables persons interested in learning modern dance jazz to sign up for dance classes offered by Aida Dance School. The app also has a admin section where the courses and enrolments can be managed.
+This application enables persons interested in learning modern jazz dance to sign up for dance classes offered by Aida Dance School. The app also has a admin section where the courses and enrolments can be managed.
 
 ### Main functionality for Students
  * See an overview of upcoming courses 
