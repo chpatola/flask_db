@@ -78,6 +78,15 @@ def enrolcourse(id):
         db.session.commit()
         return redirect("/")
 
+@app.route("/enrolledstudents/<int:id>")
+def enrolledstudents(id):
+    sql = queries.users_course
+    print(sql)
+    result = db.session.execute(sql, {"id":id})
+    enrolled_users = result.fetchall()
+    print(enrolled_users)
+    return render_template("enrolledstudents.html",enrolled_users=enrolled_users, id=id) 
+ 
    
 @app.route("/error")
 def error():

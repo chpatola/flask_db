@@ -49,15 +49,13 @@
                     {% endif %}
 
                 </li>
-            </ul>
-                
-                
+            </ul>          
 
         {% endfor %}
     
     {% else %} <!-- Landing page for NOT logged in users-->
         <h3>Here you can see our upcoming courses.</h3>
-        <p>Please Register in order to enrol to a course. Payment is made by card or cash at the first lession.</p>
+        <p>Please register in order to enrol to a course. Payment is made by card or cash at the first lession.</p>
 
         {% for course in courses %}
             <hr>
@@ -69,7 +67,11 @@
             Teacher: {{course.teacher_name}} <br>
             {{course.room_name}} <br>
             Status: {{course.status}} <br>
-            Price: {{course.price}} <br><br>
+            Price: {{course.price}} <br>
+            {% if session.usertype == 'admin' %}
+                <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
+            {% endif %}
+            <br>
         {% endfor %}
 
     {% endif %}
