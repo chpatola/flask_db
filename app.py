@@ -57,6 +57,13 @@ def adduser():
     db.session.commit()
     return redirect("/") 
 
+@app.route("/enrolcourse/<int:id>")
+def enrolcourse(id):
+    sql = queries.enrol_course
+    db.session.execute(sql, {"id":id, "username":session["username"]})
+    db.session.commit()
+    return redirect("/")
+
 @app.route("/error")
 def error():
     return render_template("error.html")    

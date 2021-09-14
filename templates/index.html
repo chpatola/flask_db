@@ -18,7 +18,7 @@
                     Occurances: {{course.occurances}} <br>
                     Teacher: {{course.teacher_name}} <br>
                     {{course.room_name}} <br>
-                    <a href="/coursedetails/{{ course.id }}">Register</a> |
+                    Price: {{course.price}} <br>
                 </li>
             </ul>
 
@@ -37,6 +37,10 @@
                     Teacher: {{course.teacher_name}} <br>
                     {{course.room_name}} <br>
                     Status: {{course.status}} <br>
+                    Price: {{course.price}} <br>
+                    {% if course.status != 'Full' %}
+                        <a href="/enrolcourse/{{ course.id }}">Enroll!</a> <br>
+                    {% endif %}
 
                 </li>
             </ul>
@@ -57,9 +61,8 @@
             Occurances: {{course.occurances}} <br>
             Teacher: {{course.teacher_name}} <br>
             {{course.room_name}} <br>
-            Status: {{course.status}} <br><br>
-           
-
+            Status: {{course.status}} <br>
+            Price: {{course.price}} <br><br>
         {% endfor %}
 
     {% endif %}

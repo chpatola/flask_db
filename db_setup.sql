@@ -140,6 +140,18 @@ VALUES (
       17,
       2,
       374
+   ),
+   ,
+   (
+      'Advanced Steps',
+      '2021-09-09',
+      '2021-12-09',
+      '17:00',
+      2,
+      12,
+      1,
+      2,
+      204
    ) ON CONFLICT (name, startdate, enddate, time, room_id) DO NOTHING;
 INSERT INTO courseenrolmentstest (course_id, user_id)
 VALUES (3, 'immi@hei.com'), (4, 'erik@heida.com') ON CONFLICT (course_id, user_id) DO NOTHING;
