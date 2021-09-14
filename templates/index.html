@@ -12,16 +12,15 @@
             <ul>
                 <li>
                     <strong>{{course.name}}</strong> <br>
-                    ID: {{ course.id }} <br>
                     Start date: {{course.startdate}} <br>
                     Time: {{ course.time }} <br>
                     Duration in hours: {{course.durationhour}} <br>
                     Occurances: {{course.occurances}} <br>
                     Teacher: {{course.teacher_name}} <br>
                     {{course.room_name}} <br>
+                    <a href="/coursedetails/{{ course.id }}">Register</a> |
                 </li>
             </ul>
-                
 
         {% endfor %}
         <h3>All upcoming courses at Aida:</h3>
@@ -52,7 +51,6 @@
         {% for course in courses %}
             <hr>
             <strong>{{course.name}}</strong> <br>
-            ID: {{ course.id }} <br>
             Start date: {{course.startdate}} <br>
             Time: {{ course.time }} <br>
             Duration in hours: {{course.durationhour}} <br>

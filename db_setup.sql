@@ -26,13 +26,14 @@ CREATE TABLE IF NOT EXISTS roomstest (
 CREATE TABLE IF NOT EXISTS coursestest (
    id SERIAL PRIMARY KEY,
    name VARCHAR(200) NOT NULL,
-   startdate DATE,
-   enddate DATE,
-   time TIME,
-   durationhour FLOAT,
-   occurances INTEGER,
+   startdate DATE NOT NULL,
+   enddate DATE NOT NULL,
+   time TIME NOT NULL,
+   durationhour FLOAT NOT NULL,
+   occurances INTEGER NOT NULL,
    teacher_id INTEGER REFERENCES teacherstest,
    room_id INTEGER REFERENCES roomstest,
+   price FLOAT NOT NULL,
    UNIQUE (name, startdate, enddate, time, room_id)
 );
 CREATE TABLE IF NOT EXISTS courseenrolmentstest (
@@ -104,7 +105,8 @@ INSERT INTO coursestest (
       durationhour,
       occurances,
       teacher_id,
-      room_id
+      room_id,
+      price
    )
 VALUES (
       'First Steps Class - Girls aged 8 - 10',
@@ -114,7 +116,8 @@ VALUES (
       1,
       16,
       1,
-      1
+      1,
+      256
    ),
    (
       'First Steps Class - Boys aged 8 - 10',
@@ -124,7 +127,8 @@ VALUES (
       1,
       16,
       1,
-      2
+      2,
+      256
    ),
    (
       'Advanced Steps',
@@ -134,7 +138,8 @@ VALUES (
       2,
       22,
       17,
-      2
+      2,
+      374
    ) ON CONFLICT (name, startdate, enddate, time, room_id) DO NOTHING;
 INSERT INTO courseenrolmentstest (course_id, user_id)
 VALUES (3, 'immi@hei.com'), (4, 'erik@heida.com') ON CONFLICT (course_id, user_id) DO NOTHING;

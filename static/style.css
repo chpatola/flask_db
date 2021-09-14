@@ -28,14 +28,23 @@
     width: 200px;;
   }
   /* Style header content */
-  .header {
-    margin-left: 310px;
-    padding:  25px 25px 25px 25px;
-    text-align: center;
-    background: #1abc9c;
-    color: white;
-    font-size: 30px;
+.header {
+  margin-left: 310px;
+  padding:  25px 25px 25px 25px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}
+
+.header a {
+  color: white;
   }
+/* When you mouse over the navigation links, change their color */
+.header a:hover {
+  color: #f1f1f1;
+}
+
 /* Style page content */
 .main {
   margin-left: 310px; /* Same as the width of the sidebar */
