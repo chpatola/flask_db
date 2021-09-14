@@ -59,11 +59,18 @@ def adduser():
 
 @app.route("/enrolcourse/<int:id>")
 def enrolcourse(id):
-    sql = queries.enrol_course
-    db.session.execute(sql, {"id":id, "username":session["username"]})
-    db.session.commit()
-    return redirect("/")
+    sql = queries.check_users_course
+    result = db.session.execute(sql, {"username":session["username"],"id":id})
+    registrated = result.fetchone()
+    if registrated[0] >0:
+        return redirect("/error")
+    else:
+        sql = queries.enrol_course
+        db.session.execute(sql, {"username":session["username"],"id":id})
+        db.session.commit()
+        return redirect("/")
 
+   
 @app.route("/error")
 def error():
     return render_template("error.html")    
@@ -105,8 +112,8 @@ def registeruser():
 
 @app.route("/removeuser")
 def removeuser():
-    sql_users_course = queries.check_users_course
-    result_users_course = db.session.execute(sql_users_course,{"username":session["username"]})
+    sql_users_courses = queries.check_users_courses
+    result_users_course = db.session.execute(sql_users_courses,{"username":session["username"]})
     users_courses = result_users_course.fetchone()
     if users_courses[0]  > 0:
         return render_template("error")

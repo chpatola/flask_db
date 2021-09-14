@@ -2,7 +2,9 @@ add_teacher = "INSERT INTO teacherstest (LASTNAME, FIRSTNAME, PHONE, EMAIL, HOUR
 
 add_user = "INSERT INTO userstest VALUES (:username, :password, :firstname, :lastname, :phone, :bornyear, :usertype, :removed)"
 
-check_users_course = "SELECT COUNT(ID) AS AMOUNT FROM COURSEENROLMENTSTEST WHERE USER_ID = :username"
+check_users_course = "SELECT COUNT(ID) AS AMOUNT FROM COURSEENROLMENTSTEST WHERE USER_ID = :username  AND COURSE_ID = :id"
+
+check_users_courses = "SELECT COUNT(ID) AS AMOUNT FROM COURSEENROLMENTSTEST WHERE USER_ID = :username"
 
 courses_all ="WITH ENROLMENTS AS (SELECT COURSE_ID,COUNT(USER_ID) AS ENROLLED_STUDENTS" \
    " FROM COURSEENROLMENTSTEST GROUP BY COURSE_ID)"\

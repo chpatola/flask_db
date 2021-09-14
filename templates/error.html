@@ -4,7 +4,11 @@
 {% block content %}
 
 {% if session.usertype == 'student'%}
-    <h3>You are enrolled to an ongoing or upcoming course. Please remove the course registration before you can delete your account</h3>
+    <h3>We encounted an error. Possible reasons:</h3>
+    <ul>
+        <li>You tried to register to a course you are already regsitered for </li>
+        <li>You tried to remove your account while being enrolled to an ongoing or upcoming course. Please remove the course registration before you can delete your account</li>
+    </ul>
 {% else %}
     <h3>You entered an incorecct username or password, please try again.</h3>
 {% endif %}
