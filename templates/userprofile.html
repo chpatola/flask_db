@@ -4,9 +4,17 @@
 
 {% block content %}
 <h2>My Profile</h2>
-<p>Here we will list your account info</p>
+<p>You find your account information below:</p>
+<br>
+<strong>Username: </strong> {{userdata.username }} <br>
+<strong>Last name: </strong> {{userdata.lastname }}<br>
+<strong>First name: </strong> {{userdata.firstname }} <br>
+<strong>Phone: </strong> {{userdata.phone }} <br>
+<strong>Born Year: </strong> {{userdata.bornyear}}<br>
+<hr>
+
 <p>If you want to remove your Aida Dance School account, please click below.
-    OBS! This is permanent!</p>
+   <br> OBS! This is permanent!</p>
 
 <a href="/removeuser">Remove my account</a>
 

@@ -147,4 +147,8 @@ def teachers():
 
 @app.route("/userprofile")
 def userprofile():
-    return render_template("userprofile.html")
+    sql = queries.userdata
+    result = db.session.execute(sql,{"username":session["username"]})
+    userdata =  result.fetchone()
+    print(userdata)
+    return render_template("userprofile.html", userdata=userdata)
