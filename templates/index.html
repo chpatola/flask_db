@@ -28,6 +28,7 @@
 
         {% endfor %}
         <h3>All upcoming courses at Aida:</h3>
+        <p>Payment is made by card or cash at the first lession.</p>
 
         {% for course in courses %}
             <ul>
@@ -56,6 +57,7 @@
     
     {% else %} <!-- Landing page for NOT logged in users-->
         <h3>Here you can see our upcoming courses.</h3>
+        <p>Please Register in order to enrol to a course. Payment is made by card or cash at the first lession.</p>
 
         {% for course in courses %}
             <hr>
