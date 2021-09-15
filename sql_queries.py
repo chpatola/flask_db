@@ -23,6 +23,12 @@ courses_user ="SELECT C.ID,C.NAME,C.STARTDATE,C.ENDDATE,C.TIME, C.DURATIONHOUR, 
 
 disenrol_course = "DELETE FROM COURSEENROLMENTSTEST WHERE USER_ID=:username AND COURSE_ID =:id"
 
+edit_user = "UPDATE USERSTEST SET FIRSTNAME=:firstname, LASTNAME=:lastname,PHONE=:phone,BORNYEAR=:bornyear"\
+   " WHERE USERNAME=:username"
+
+edit_userpsw = "UPDATE USERSTEST SET PASSWORD=:newpassword, FIRSTNAME=:firstname, LASTNAME=:lastname,PHONE=:phone,BORNYEAR=:bornyear"\
+   " WHERE USERNAME=:username"
+
 enrol_course = "INSERT INTO COURSEENROLMENTSTEST (COURSE_ID, USER_ID) VALUES (:id, :username)"
 
 find_user = "SELECT username, password, firstname, usertype FROM userstest WHERE username=:username AND removed = FALSE"
@@ -32,6 +38,7 @@ remove_user = "UPDATE USERSTEST SET REMOVED = TRUE WHERE USERNAME=:username "
 rooms = "SELECT ID, NAME, M2,CAPACITY FROM ROOMSTEST"
 
 teachers = "SELECT ID, LASTNAME, FIRSTNAME, PHONE, EMAIL, HOURLYSALARY FROM TEACHERSTEST"
+
 
 userdata = "SELECT USERNAME, FIRSTNAME, LASTNAME, PHONE, BORNYEAR FROM USERSTEST WHERE USERNAME=:username"
 

@@ -141,7 +141,6 @@ VALUES (
       2,
       374
    ),
-   ,
    (
       'Advanced Steps',
       '2021-09-09',

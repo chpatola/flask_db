@@ -4,14 +4,28 @@
 
 {% block content %}
 <h2>My Profile</h2>
-<p>You find your account information below:</p>
-<br>
-<strong>Username: </strong> {{userdata.username }} <br>
-<strong>Last name: </strong> {{userdata.lastname }}<br>
-<strong>First name: </strong> {{userdata.firstname }} <br>
-<strong>Phone: </strong> {{userdata.phone }} <br>
-<strong>Born Year: </strong> {{userdata.bornyear}}<br>
-<hr>
+<p>You find your account information below.</p>
+<p>If you make updates, confirm them with your password</p>
+
+<form action="/edituser" method="POST">
+
+   <p>Username:<br>
+   <input type="email" name="username" class="textfields" value={{userdata.username}} disabled="disabled"> </p>
+   <p>First name:<br>
+   <input type="text" name="firstname" required minlength="1" class="textfields" value={{userdata.firstname}} ></p>
+   <p>Last name:<br>
+   <input type="text" name="lastname" required minlength="1" class="textfields" value={{userdata.lastname}} ></p>
+   <p>Phone:<br>
+   <input type="tel" name="phone" minlength="6" class="textfields" value={{userdata.phone}}></p>
+   <p>Year of birth:<br>
+   <input type="number" name="bornyear" required minlength="4" class="textfields" value={{userdata.bornyear}}></p> <!-- You need to handle when they do not insert anything!-->
+   <p>Password:<br>
+   <input type="password" name="password" required class="textfields" ></p>
+   <p>New password:<br>
+   <input type="password" name="newpassword" class="textfields" ></p>
+   <input type="submit" value="Update info">
+   </form>
+   <br>
 
 <p>If you want to remove your Aida Dance School account, please click below.
    <br> OBS! This is permanent!</p>

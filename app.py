@@ -65,6 +65,39 @@ def disenrolcourse(id):
     db.session.commit()
     return redirect("/")
 
+@app.route("/edituser",methods=["POST"])
+def edituser():
+    sql = queries.find_user
+    result = db.session.execute(sql, {"username":session["username"]})
+    user = result.fetchone()
+
+    password = request.form["password"]
+    newpassword = request.form["newpassword"]
+    firstname = request.form["firstname"]
+    lastname = request.form["lastname"]
+    phone = request.form["phone"]
+    bornyear = request.form["bornyear"]
+
+    if check_password_hash(user.password,password):
+        if len(newpassword)>3:
+            hash_value = generate_password_hash(newpassword)    
+            sql = queries.edit_userpsw
+            db.session.execute(sql, 
+            {"username":session["username"], "firstname":firstname,"lastname":lastname,"phone":phone,"bornyear":bornyear,"newpassword":hash_value})
+            db.session.commit()
+            return redirect("/userprofile")
+        else:
+            sql = queries.edit_user
+            print(sql)
+            db.session.execute(sql, {"username":session["username"], "firstname":firstname,"lastname":lastname,"phone":phone,"bornyear":bornyear})
+            db.session.commit()
+            return redirect("/userprofile")    
+    else:
+        return redirect("/error")
+       
+        
+
+
 @app.route("/enrolcourse/<int:id>")
 def enrolcourse(id):
     sql = queries.check_users_course
