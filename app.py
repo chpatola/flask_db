@@ -166,7 +166,7 @@ def removeuser():
     result_users_course = db.session.execute(sql_users_courses,{"username":session["username"]})
     users_courses = result_users_course.fetchone()
     if users_courses[0]  > 0:
-        return render_template("error")
+        return redirect("/error")
     else: 
         sql_remove = queries.remove_user
         db.session.execute(sql_remove,{"username":session["username"]})
