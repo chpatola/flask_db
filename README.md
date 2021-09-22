@@ -31,7 +31,7 @@ This application enables persons interested in learning modern jazz dance to sig
  
 ## Progression 26.9
 The base functionality of the application is almost finished. What is missing is the admin's ability to create a new course and to delete a course. After that is set up, I will improve the stability of the app (validating input, error catching).
-The app can be tested as an admin and as a student:
+The app can be tested at https://aidadanceschool.herokuapp.com/ as an admin and as a student:
 
 ### Admin
 info@aidadanceschool.com & aidarocks_
