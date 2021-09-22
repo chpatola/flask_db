@@ -32,7 +32,7 @@
         <h3>All upcoming courses at Aida:</h3>
         <p>Payment is made by card or cash at the first lession.</p>
 
-        {% for course in courses %}
+        {% for course in courses_upcoming %}
             <ul>
                 <li>
                     <strong>{{course.name}}</strong> <br>
@@ -56,14 +56,27 @@
         {% endfor %}
 
     {% elif session.usertype == 'admin'%}  <!-- Landing page for logged in admin-->
-        <h3><a href="/registercourse">Add Course</a></h3> <br>
+        <h3><a href="/registercourse">Add Course</a></h3> 
         <hr>
         <h3>Ongoing Courses</h3>
-        <p>Here we will fetch and show you all ongoing courses</p>
+        {% for course in courses_ongoing %}
+            <strong>{{course.name}}</strong> <br>
+            Start date: {{course.startdate}} <br>
+            Time: {{ course.time }} <br>
+            Duration in hours: {{course.durationhour}} <br>
+            Occurances: {{course.occurances}} <br>
+            Teacher: {{course.teacher_name}} <br>
+            {{course.room_name}} <br>
+            Status: {{course.status}} <br>
+            Price: {{course.price}} <br>
+            <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
+            <br>
+        {% endfor %}
+        
         <hr>
         <h3>Upcoming Courses</h3>
 
-        {% for course in courses %}
+        {% for course in courses_upcoming %}
             <strong>{{course.name}}</strong> <br>
             Start date: {{course.startdate}} <br>
             Time: {{ course.time }} <br>
@@ -81,7 +94,7 @@
         <h3>Here you can see our upcoming courses.</h3>
         <p>Please register in order to enrol to a course. Payment is made by card or cash at the first lession.</p>
 
-        {% for course in courses %}
+        {% for course in courses_upcoming %}
             <hr>
             <strong>{{course.name}}</strong> <br>
             Start date: {{course.startdate}} <br>

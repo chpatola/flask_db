@@ -16,15 +16,20 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    sql = queries.courses_all
-    result = db.session.execute(sql)
-    courses = result.fetchall()
+    sql_upcoming = queries.courses_upcoming
+    result_upcoming = db.session.execute(sql_upcoming)
+    courses_upcoming = result_upcoming.fetchall()
+
     if session.get("firstname"):
         sql_user = queries.courses_user
         result_user = db.session.execute(sql_user, {"user_id":session["username"]})
         courses_user = result_user.fetchall()
-        return render_template("index.html",courses=courses,courses_user=courses_user, today=date.today())   
-    return render_template("index.html",courses=courses)
+
+        sql_ongoing = queries.courses_ongoing
+        result_ongoing = db.session.execute(sql_ongoing)
+        courses_ongoing = result_ongoing.fetchall()
+        return render_template("index.html",courses_ongoing=courses_ongoing,courses_upcoming=courses_upcoming, courses_user=courses_user, today=date.today())   
+    return render_template("index.html",courses_upcoming=courses_upcoming)
 
 @app.route("/addcourse",methods=["POST"])
 def addcourse():
