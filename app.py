@@ -25,6 +25,10 @@ def index():
         return render_template("index.html",courses=courses,courses_user=courses_user, today=date.today())   
     return render_template("index.html",courses=courses)
 
+@app.route("/addcourse",methods=["POST"])
+def addcourse():
+    return redirect("/")
+
 @app.route("/addteacher",methods=["POST"])
 def addteacher():
     firstname = request.form["firstname"]
@@ -93,9 +97,7 @@ def edituser():
             db.session.commit()
             return redirect("/userprofile")    
     else:
-        return redirect("/error")
-       
-        
+        return redirect("/error")        
 
 
 @app.route("/enrolcourse/<int:id>")
@@ -151,6 +153,10 @@ def logout():
     del session["username"]
     del session["usertype"]
     return redirect("/")
+
+@app.route("/registercourse")
+def registercourse():
+    return render_template("registercourse.html")
 
 @app.route("/registerteacher")
 def registerteacher():

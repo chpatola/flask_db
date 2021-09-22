@@ -8,6 +8,7 @@
     {% if session.usertype == 'student'%} <!-- Landing page for logged in students-->
         <h2>Welcome to Aida Dance School</h2>    
         <h3>Your ongoing or upcoming courses:</h3>
+        
         {% for course in courses_user %}
             <ul>
                 <li>
@@ -27,6 +28,7 @@
             </ul>
 
         {% endfor %}
+
         <h3>All upcoming courses at Aida:</h3>
         <p>Payment is made by card or cash at the first lession.</p>
 
@@ -52,7 +54,29 @@
             </ul>          
 
         {% endfor %}
-    
+
+    {% elif session.usertype == 'admin'%}  <!-- Landing page for logged in admin-->
+        <h3><a href="/registercourse">Add Course</a></h3> <br>
+        <hr>
+        <h3>Ongoing Courses</h3>
+        <p>Here we will fetch and show you all ongoing courses</p>
+        <hr>
+        <h3>Upcoming Courses</h3>
+
+        {% for course in courses %}
+            <strong>{{course.name}}</strong> <br>
+            Start date: {{course.startdate}} <br>
+            Time: {{ course.time }} <br>
+            Duration in hours: {{course.durationhour}} <br>
+            Occurances: {{course.occurances}} <br>
+            Teacher: {{course.teacher_name}} <br>
+            {{course.room_name}} <br>
+            Status: {{course.status}} <br>
+            Price: {{course.price}} <br>
+            <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
+            <br>
+        {% endfor %}
+
     {% else %} <!-- Landing page for NOT logged in users-->
         <h3>Here you can see our upcoming courses.</h3>
         <p>Please register in order to enrol to a course. Payment is made by card or cash at the first lession.</p>
@@ -68,9 +92,6 @@
             {{course.room_name}} <br>
             Status: {{course.status}} <br>
             Price: {{course.price}} <br>
-            {% if session.usertype == 'admin' %}
-                <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
-            {% endif %}
             <br>
         {% endfor %}
 

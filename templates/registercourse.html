@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}Add course{% endblock %}
+{% block content %}
+<h2>Please fill in the information below</h2>
+<form action="/addcourse" method="POST">
+
+    <p>Name:<br>
+    <input type="text" name="name" required minlength="5" class="textfields" ></p>
+    <p>Start Date:<br>
+    <input type="date" name="startdate" required class="textfields" ></p>
+    <p>End Date:<br>
+    <input type="date" name="enddate" required class="textfields" ></p>
+    <p>Time:<br>
+    <input type="time" name="time" required class="textfields" > </p>
+    <p>Duration (hours):<br>
+    <input type="number" name="duration" required  class="textfields" ></p>
+    <p>Occurances:<br>
+    <input type="number" name="occurances" required class="textfields" > </p>
+    <p>Price (whole course):<br>
+    <input type="number" name="price"  class="textfields" ></p>
+    <p>Teacher:<br>
+    <input type="number" name="teacher" required minlength="1" class="textfields" ></p>
+    <p>Room:<br>
+    <input type="number" name="room" required minlength="1" class="textfields" ></p> 
+
+    <input type="submit" value="Add course">
+    </form>
+{% endblock %}
