@@ -29,3 +29,12 @@ This application enables persons interested in learning modern jazz dance to sig
  * COURSES((pk) id:serial, startdate:date, finishdate:date,time:time, durationhour:float, occurances:int, (fk) teacherid -> Teachers, (fk) roomid -> Rooms)
  * COURSESENROLMENT((pk) id:serial, (fk) courseid -> Courses,(fk) userid -> Users - On delete set null)
  
+## Progression 26.9
+The base functionality of the application is almost finished. What is missing is the admin's ability to create a new course and to delete a course. After that is set up, I will improve the stability of the app (validating input, error catching).
+The app can be tested as an admin and as a student:
+
+### Admin
+info@aidadanceschool.com & aidarocks_
+
+### Student
+student12@student.com & <3aidadance
