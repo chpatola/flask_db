@@ -33,6 +33,20 @@ def index():
 
 @app.route("/addcourse",methods=["POST"])
 def addcourse():
+    name = request.form["name"]
+    startdate = request.form["startdate"]
+    enddate = request.form["enddate"]
+    time = request.form["time"]
+    duration = request.form["duration"]
+    occurances = request.form["occurances"]
+    price = request.form["price"]
+    teacher = request.form["teacher"]
+    room = request.form["room"]
+
+    sql = queries.add_course
+    db.session.execute(sql, {
+        "name":name, "startdate":startdate, "enddate":enddate,"time":time, "duration":duration,"occurances":occurances, "price":price,"teacher_id":teacher, "room_id":room})
+    db.session.commit()
     return redirect("/")
 
 @app.route("/addteacher",methods=["POST"])
@@ -162,7 +176,14 @@ def logout():
 
 @app.route("/registercourse")
 def registercourse():
-    return render_template("registercourse.html")
+    sql_teachers = queries.teachers
+    result_teachers = db.session.execute(sql_teachers)
+    teachers = result_teachers.fetchall()
+
+    sql_rooms = queries.rooms
+    result_rooms = db.session.execute(sql_rooms)
+    rooms = result_rooms.fetchall()
+    return render_template("registercourse.html", rooms=rooms, teachers=teachers)
 
 @app.route("/registerteacher")
 def registerteacher():

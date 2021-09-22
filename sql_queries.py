@@ -1,3 +1,6 @@
+add_course = "INSERT INTO courses (NAME, STARTDATE, ENDDATE, TIME, OCCURANCES, DURATIONHOUR, PRICE, TEACHER_ID, ROOM_ID)"\
+   " VALUES (:name, :startdate, :enddate, :time, :occurances, :duration, :price, :teacher_id, :room_id)" 
+
 add_teacher = "INSERT INTO teachers (LASTNAME, FIRSTNAME, PHONE, EMAIL, HOURLYSALARY) VALUES (:firstname, :lastname, :phone, :email, :hourlysalary)"
 
 add_user = "INSERT INTO users VALUES (:username, :password, :firstname, :lastname, :phone, :bornyear, :usertype, :removed)"
@@ -46,7 +49,7 @@ remove_user = "UPDATE USERS SET REMOVED = TRUE WHERE USERNAME=:username "
 
 rooms = "SELECT ID, NAME, M2,CAPACITY FROM ROOMS"
 
-teachers = "SELECT ID, LASTNAME, FIRSTNAME, PHONE, EMAIL, HOURLYSALARY FROM TEACHERS"
+teachers = "SELECT ID, LASTNAME, FIRSTNAME, CONCAT(LASTNAME, ', ', FIRSTNAME) AS NAME, PHONE, EMAIL, HOURLYSALARY FROM TEACHERS"
 
 
 userdata = "SELECT USERNAME, FIRSTNAME, LASTNAME, PHONE, BORNYEAR FROM USERS WHERE USERNAME=:username"

@@ -19,11 +19,19 @@
     <input type="number" name="occurances" required class="textfields" > </p>
     <p>Price (whole course):<br>
     <input type="number" name="price"  class="textfields" ></p>
-    <p>Teacher:<br>
-    <input type="number" name="teacher" required minlength="1" class="textfields" ></p>
-    <p>Room:<br>
-    <input type="number" name="room" required minlength="1" class="textfields" ></p> 
-
+    <p><label for="teacher">Teacher:</label><br>
+    <select name="teacher">
+        {% for teacher in teachers %}
+            <option value={{teacher.id}}>{{teacher.name}}</option>
+        {% endfor %}    
+    </select></p>
+    <p><label for="room">Room:</label><br>
+    <select name="room">
+        {% for room in rooms %}
+            <option value={{room.id}}>{{room.name}}</option>
+        {% endfor %}    
+    </select></p>  
+    <br>
     <input type="submit" value="Add course">
     </form>
 {% endblock %}
