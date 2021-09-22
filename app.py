@@ -7,12 +7,6 @@ from os import getenv
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
 
-import os
-import re
-
-uri = os.getenv("DATABASE_URL")  # or other relevant config var
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
 
 app = Flask(__name__)
 app.secret_key = getenv("SECRET_KEY")
