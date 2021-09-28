@@ -45,7 +45,9 @@ enrol_course = "INSERT INTO COURSEENROLMENTS (COURSE_ID, USER_ID) VALUES (:id, :
 
 find_user = "SELECT username, password, firstname, usertype FROM users WHERE username=:username AND removed = FALSE"
 
-remove_user = "UPDATE USERS SET REMOVED = TRUE WHERE USERNAME=:username "
+remove_course = "DELETE FROM  COURSES WHERE ID =:id"
+
+remove_user = "UPDATE USERS SET REMOVED = TRUE WHERE USERNAME=:username"
 
 rooms = "SELECT ID, NAME, M2,CAPACITY FROM ROOMS"
 

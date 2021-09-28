@@ -280,6 +280,8 @@ VALUES
 (3, 'immi@hei.com'),
 (4, 'erik@heida.com'),
 (3, 'erik@heida.com'),
+(2, 'calle@calle.com'),
+(2, 'anders-erik@cool.com'),
 (1, 'enna@heida.com'),
 (1, 'ennalisa@heida.com'),
 (1, 'mimmi@cool.com'),
