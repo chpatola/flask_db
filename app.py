@@ -46,11 +46,14 @@ def addcourse():
     teacher = request.form["teacher"]
     room = request.form["room"]
 
-    sql = queries.add_course
-    db.session.execute(sql, {
-        "name": name, "startdate": startdate, "enddate": enddate, "time": time, "duration": duration, "occurances": occurances, "price": price, "teacher_id": teacher, "room_id": room})
-    db.session.commit()
-    return redirect("/")
+    if session["usertype"] == 'admin':
+        sql = queries.add_course
+        db.session.execute(sql, {
+            "name": name, "startdate": startdate, "enddate": enddate, "time": time, "duration": duration, "occurances": occurances, "price": price, "teacher_id": teacher, "room_id": room})
+        db.session.commit()
+        return redirect("/")
+    else: 
+        return redirect("/error")    
 
 
 @app.route("/addteacher", methods=["POST"])
@@ -60,12 +63,14 @@ def addteacher():
     phone = request.form["phone"]
     email = request.form["email"]
     hourlysalary = request.form["hourlysalary"]
-    sql = queries.add_teacher
-    db.session.execute(sql, {"firstname": firstname, "lastname": lastname,
-                             "phone": phone, "email": email, "hourlysalary": hourlysalary})
-    db.session.commit()
-    return redirect("/teachers")
-
+    if session["usertype"] == 'admin':
+        sql = queries.add_teacher
+        db.session.execute(sql, {"firstname": firstname, "lastname": lastname,
+                                "phone": phone, "email": email, "hourlysalary": hourlysalary})
+        db.session.commit()
+        return redirect("/teachers")
+    else:
+        return redirect("/error")
 
 @app.route("/adduser", methods=["POST"])
 def adduser():
@@ -91,9 +96,12 @@ def adduser():
 @app.route("/disenrolcourse/<int:id>")
 def disenrolcourse(id):
     sql = queries.disenrol_course
-    db.session.execute(sql, {"username": session["username"], "id": id})
-    db.session.commit()
-    return redirect("/")
+    if session["username"]:
+        db.session.execute(sql, {"username": session["username"], "id": id})
+        db.session.commit()
+        return redirect("/")
+    else:
+        return redirect("/error")    
 
 
 @app.route("/edituser", methods=["POST"])
@@ -145,12 +153,13 @@ def enrolcourse(id):
 
 @app.route("/enrolledstudents/<int:id>")
 def enrolledstudents(id):
-    sql = queries.users_course
-    print(sql)
-    result = db.session.execute(sql, {"id": id})
-    enrolled_users = result.fetchall()
-    print(enrolled_users)
-    return render_template("enrolledstudents.html", enrolled_users=enrolled_users, id=id)
+    if session["usertype"] == 'admin':
+        sql = queries.users_course
+        result = db.session.execute(sql, {"id": id})
+        enrolled_users = result.fetchall()
+        return render_template("enrolledstudents.html", enrolled_users=enrolled_users, id=id)
+    else:
+        return redirect("/")    
 
 
 @app.route("/error")
@@ -191,19 +200,24 @@ def logout():
 
 @app.route("/registercourse")
 def registercourse():
-    sql_teachers = queries.teachers
-    result_teachers = db.session.execute(sql_teachers)
-    teachers = result_teachers.fetchall()
+    if session["usertype"] == 'admin':
+        sql_teachers = queries.teachers
+        result_teachers = db.session.execute(sql_teachers)
+        teachers = result_teachers.fetchall()
 
-    sql_rooms = queries.rooms
-    result_rooms = db.session.execute(sql_rooms)
-    rooms = result_rooms.fetchall()
-    return render_template("registercourse.html", rooms=rooms, teachers=teachers)
-
+        sql_rooms = queries.rooms
+        result_rooms = db.session.execute(sql_rooms)
+        rooms = result_rooms.fetchall()
+        return render_template("registercourse.html", rooms=rooms, teachers=teachers)
+    else:
+        return redirect("/")
 
 @app.route("/registerteacher")
 def registerteacher():
-    return render_template("registerteacher.html")
+    if session["usertype"] == 'admin':
+        return render_template("registerteacher.html")
+    else:
+        return redirect("/error")    
 
 
 @app.route("/registeruser", methods=["POST"])
@@ -213,18 +227,20 @@ def registeruser():
 
 @app.route("/removecourse/<int:id>")
 def removecourse(id):
-    sql = queries.users_course
-    result = db.session.execute(sql, {"id": id})
-    enrolled_users = result.fetchall()
-    print(len(enrolled_users))
-    if len(enrolled_users) > 0:
-      return redirect("/error")
+    if session["usertype"] == 'admin':
+        sql = queries.users_course
+        result = db.session.execute(sql, {"id": id})
+        enrolled_users = result.fetchall()
+        if len(enrolled_users) > 0:
+            return redirect("/error")
+        else:
+            sql = queries.remove_course
+            db.session.execute(sql, {"id": id})
+            db.session.commit()
+            return redirect("/")
     else:
-        sql = queries.remove_course
-        db.session.execute(sql, {"id": id})
-        db.session.commit()
-        return redirect("/")
-  
+        return redirect("/error")
+
 
 
 @app.route("/removeuser")
@@ -244,19 +260,23 @@ def removeuser():
 
 @app.route("/rooms")
 def rooms():
-    sql = queries.rooms
-    result = db.session.execute(sql)
-    rooms = result.fetchall()
-    return render_template("rooms.html", rooms=rooms)
-
+    if session["usertype"] == 'admin':
+        sql = queries.rooms
+        result = db.session.execute(sql)
+        rooms = result.fetchall()
+        return render_template("rooms.html", rooms=rooms)
+    else:
+        return redirect("/error")
 
 @app.route("/teachers")
 def teachers():
-    sql = queries.teachers
-    result = db.session.execute(sql)
-    teachers = result.fetchall()
-    return render_template("teachers.html", teachers=teachers)
-
+    if session["usertype"] == 'admin':
+        sql = queries.teachers
+        result = db.session.execute(sql)
+        teachers = result.fetchall()
+        return render_template("teachers.html", teachers=teachers)
+    else:
+        return redirect("/error")
 
 @app.route("/userprofile")
 def userprofile():

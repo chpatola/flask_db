@@ -67,9 +67,12 @@
             Occurances: {{course.occurances}} <br>
             Teacher: {{course.teacher_name}} <br>
             {{course.room_name}} <br>
+            Enrolled students: {{course.enrolled_students}} <br>
             Status: {{course.status}} <br>
             Price: {{course.price}} <br>
             <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
+            <strong><a href="/removecourse/{{ course.id }}">Remove Course</a></strong> <br> <!--Show only if course.enrolled_students null-->
+
             <br>
         {% endfor %}
         
@@ -84,15 +87,20 @@
             Occurances: {{course.occurances}} <br>
             Teacher: {{course.teacher_name}} <br>
             {{course.room_name}} <br>
+            Enrolled students: {{course.enrolled_students}} <br>
             Status: {{course.status}} <br>
             Price: {{course.price}} <br>
             <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
-            <strong><a href="/removecourse/{{ course.id }}">Remove Course</a></strong> <br>
+            <strong><a href="/removecourse/{{ course.id }}">Remove Course</a></strong> <br> <!--Show only if course.enrolled_students null-->
             <br>
         {% endfor %}
 
     {% else %} <!-- Landing page for NOT logged in users-->
-        <h3>Here you can see our upcoming courses.</h3>
+        <h2>Welcome to Aida Dance School</h2>
+        <p>We love modern jazz dance and will make our best to help you find this joy to.
+            Join one of our classes and enjoy teaching by our world class dance teachers in a warm and welcoming athmosphere.
+        </p> 
+        <h3>Our upcoming courses</h3>
         <p>Please register in order to enrol to a course. Payment is made by card or cash at the first lession.</p>
 
         {% for course in courses_upcoming %}

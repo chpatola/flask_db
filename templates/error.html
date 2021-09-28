@@ -8,8 +8,9 @@
     <ul>
         <li>You tried to register to a course you are already regsitered for </li>
         <li>You tried to remove your account while being enrolled to an ongoing or upcoming course. Please remove the course registration before you can delete your account</li>
+        <li>You tried to visit a page you do not have access to</li>
     </ul>
-{% else if session.usertype == 'admin'%}
+{% elif session.usertype == 'admin'%}
     <h3>You tried to remove a course with enrolled participants. This is not possible</h3>
 {% else %}    
     <h3>You entered an incorecct username or password, please try again.</h3>
