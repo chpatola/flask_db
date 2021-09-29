@@ -81,8 +81,6 @@ def addteacher():
 
 @app.route("/adduser", methods=["POST"])
 def adduser():
-    if session["csrf_token"] != request.form["csrf_token"]:
-            abort(403)
     username = request.form["username"]
     password = request.form["password"]
     firstname = request.form["firstname"]
@@ -95,6 +93,7 @@ def adduser():
         session["firstname"] = firstname
         session["username"] = username
         session["usertype"] = 'student'
+        session["csrf_token"] = secrets.token_hex(16)
         sql = queries.add_user
         db.session.execute(sql, {"username": username, "password": hash_value, "firstname": firstname, "lastname": lastname,
                                 "phone": phone, "bornyear": bornyear, "usertype": "student", "removed": False})
