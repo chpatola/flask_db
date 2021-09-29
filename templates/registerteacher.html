@@ -15,7 +15,7 @@
     <input type="email" name="email" required maxlength="99" class="textfields" > </p>
     <p>Salary € / h:<br>
     <input type="number" name="hourlysalary" required minlength="1" max=1000 class="textfields" ></p> 
-
     <input type="submit" value="Add teacher">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 {% endblock %}

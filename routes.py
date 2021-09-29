@@ -1,11 +1,12 @@
 import os
 import sql_queries as queries
 import error_texts as errortext
+import secrets
 from app import app
 from db import db
 from flask import redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
-from os import getenv
+from os import abort, getenv
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
 
@@ -31,6 +32,8 @@ def index():
 
 @app.route("/addcourse", methods=["POST"])
 def addcourse():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
     name = request.form["name"]
     startdate = request.form["startdate"]
     enddate = request.form["enddate"]
@@ -56,6 +59,8 @@ def addcourse():
 
 @app.route("/addteacher", methods=["POST"])
 def addteacher():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
     firstname = request.form["firstname"]
     lastname = request.form["lastname"]
     phone = request.form["phone"]
@@ -76,6 +81,8 @@ def addteacher():
 
 @app.route("/adduser", methods=["POST"])
 def adduser():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
     username = request.form["username"]
     password = request.form["password"]
     firstname = request.form["firstname"]
@@ -192,6 +199,7 @@ def login():
             session["firstname"] = user.firstname
             session["username"] = user.username  # here we set the session info
             session["usertype"] = user.usertype  # here we set the session info
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return render_template("error.html",errortext=errortext.login_error)
@@ -202,6 +210,7 @@ def logout():
     del session["firstname"]  # here we remove the session info
     del session["username"]
     del session["usertype"]
+    del session["csrf_token"]
     return redirect("/")
 
 
@@ -252,6 +261,8 @@ def removecourse(id):
 
 @app.route("/removeuser")
 def removeuser():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
     if session["username"]:
         sql_users_courses = queries.check_users_courses
         result_users_course = db.session.execute(

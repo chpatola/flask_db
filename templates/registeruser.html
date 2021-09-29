@@ -19,5 +19,6 @@
     <input type="number" name="bornyear" required minlength="4" max=3000 class="textfields" ></p> <!-- You need to handle when they do not insert anything!-->
 
     <input type="submit" value="Register">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 {% endblock %}

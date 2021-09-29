@@ -33,5 +33,6 @@
     </select></p>  
     <br>
     <input type="submit" value="Add course">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 {% endblock %}
