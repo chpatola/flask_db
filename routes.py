@@ -94,6 +94,7 @@ def adduser():
         session["username"] = username
         session["usertype"] = 'student'
         session["csrf_token"] = secrets.token_hex(16)
+        print(session["csrf_token"])
         sql = queries.add_user
         db.session.execute(sql, {"username": username, "password": hash_value, "firstname": firstname, "lastname": lastname,
                                 "phone": phone, "bornyear": bornyear, "usertype": "student", "removed": False})
@@ -260,8 +261,6 @@ def removecourse(id):
 
 @app.route("/removeuser")
 def removeuser():
-    if session["csrf_token"] != request.form["csrf_token"]:
-            abort(403)
     if session["username"]:
         sql_users_courses = queries.check_users_courses
         result_users_course = db.session.execute(

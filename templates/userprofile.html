@@ -30,8 +30,7 @@
    {% if session.usertype == 'student'%}
       <p>If you want to remove your Aida Dance School account, please click below.
       <br> OBS! This is permanent!</p>
-        
-      <a href="/removeuser">Remove my account</a>
+         <a href="/removeuser" onclick="return confirm('Are you sure you want to delete your account?');">Remove my account</a>
    {% endif %} 
    <br>
 
