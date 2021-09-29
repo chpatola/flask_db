@@ -1,10 +1,30 @@
-# Flask App with a Database: Dance School Enrolment System
-An application made within the course "Tietokantasovellus" at University of Helsinki
-You can use it here: https://aidadanceschool.herokuapp.com
+# Flask App with a Postgres Database: Dance School Enrolment System
 
 ## About
+This application is made within  the course "Tietokantasovellus" at University of Helsinki. It enables persons interested in learning modern jazz dance to sign up for dance classes offered by Aida Dance School. 
+The app also has a admin section where the courses and enrolments can be managed.
+You can use it here: https://aidadanceschool.herokuapp.com
 
-This application enables persons interested in learning modern jazz dance to sign up for dance classes offered by Aida Dance School. The app also has a admin section where the courses and enrolments can be managed.
+#### Admin
+info@aidadanceschool.com & aidarocks_
+
+#### Student
+student12@student.com & <3aidadance
+
+## Deployment Instructions (for learning purposes)
+
+### Develop and test locally
+1. Clone this git repository to your computer
+2. Download pg-install.sh from https://github.com/hy-tsoha/local-pg and run it according to the instructions
+3. cd into the folder for this repo
+4. create an .env file with DATABASE_URL and SECRET_KEY
+5. Run the setup file (I need to fix that!) and open the local version of the app in http://127.0.0.1:5000/ 
+
+### Publish on Heroku
+1. Create a free account at Heroku
+2. Create a new app with a name of your choice
+3. Provision postgres database in heroku
+.... (More to come)
 
 ### Main functionality for Students
  * See an overview of upcoming courses 
@@ -32,10 +52,4 @@ This application enables persons interested in learning modern jazz dance to sig
  
 ## Progression 26.9
 The base functionality of the application is almost finished. What is missing is the admin's ability to delete a course. After that is set up, I will improve the stability of the app (validating input, error catching).
-The app can be tested at https://aidadanceschool.herokuapp.com as an admin and as a student:
 
-#### Admin
-info@aidadanceschool.com & aidarocks_
-
-#### Student
-student12@student.com & <3aidadance
