@@ -44,7 +44,11 @@
                     Occurances: {{course.occurances}} <br>
                     Teacher: {{course.teacher_name}} <br>
                     {{course.room_name}} <br>
+                    {% if course.status == 'Full' %}
+                    <div class="alert"> Status: {{course.status}} <br></div>
+                    {% else %}
                     Status: {{course.status}} <br>
+                    {% endif %}
                     Price: {{course.price}} <br>
                     {% if course.status != 'Full' %}
                        <strong><a href="/enrolcourse/{{ course.id }}">Enroll</a></strong> <br>
@@ -71,7 +75,11 @@
             Teacher: {{course.teacher_name}} <br>
             {{course.room_name}} <br>
             Enrolled students: {{course.enrolled_students}} <br>
+            {% if course.status == 'Full' %}
+                <div class="alert"> Status: {{course.status}} <br></div>
+            {% else %}
             Status: {{course.status}} <br>
+            {% endif %}
             Price: {{course.price}} <br>
             <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
             <strong><a href="/removecourse/{{ course.id }}">Remove Course</a></strong> <br> <!--Show only if course.enrolled_students null-->
@@ -91,7 +99,11 @@
             Teacher: {{course.teacher_name}} <br>
             {{course.room_name}} <br>
             Enrolled students: {{course.enrolled_students}} <br>
+            {% if course.status == 'Full' %}
+                <div class="alert"> Status: {{course.status}} <br></div>
+            {% else %}
             Status: {{course.status}} <br>
+            {% endif %}
             Price: {{course.price}} <br>
             <strong><a href="/enrolledstudents/{{ course.id }}">Enrolled Students</a></strong> <br>
             <strong><a href="/removecourse/{{ course.id }}">Remove Course</a></strong> <br> <!--Show only if course.enrolled_students null-->
