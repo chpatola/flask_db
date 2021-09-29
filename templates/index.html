@@ -56,7 +56,10 @@
         {% endfor %}
 
     {% elif session.usertype == 'admin'%}  <!-- Landing page for logged in admin-->
-        <h3><a href="/registercourse">Add Course</a></h3> 
+    <p> <form action="/registercourse" method="POST">
+        <input type="submit" value="Add Course">
+        </form></p>
+   
         <hr>
         <h3>Ongoing Courses</h3>
         {% for course in courses_ongoing %}

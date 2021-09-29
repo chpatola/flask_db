@@ -4,8 +4,9 @@
 
 {% block content %}
 <br>
-<h3><a href="/registerteacher">Add teacher</a></h3>
-<br>
+<form action="/registerteacher" method="POST">
+    <input type="submit" value="Add teacher">
+    </form>
 <h2>Our dance teachers</h2>
 
 {% for teacher in teachers %}

@@ -95,8 +95,8 @@ def adduser():
 
 @app.route("/disenrolcourse/<int:id>")
 def disenrolcourse(id):
-    sql = queries.disenrol_course
     if session["username"]:
+        sql = queries.disenrol_course
         db.session.execute(sql, {"username": session["username"], "id": id})
         db.session.commit()
         return redirect("/")
@@ -198,7 +198,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/registercourse")
+@app.route("/registercourse",methods=["POST"])
 def registercourse():
     if session["usertype"] == 'admin':
         sql_teachers = queries.teachers
@@ -212,7 +212,7 @@ def registercourse():
     else:
         return redirect("/")
 
-@app.route("/registerteacher")
+@app.route("/registerteacher",methods=["POST"])
 def registerteacher():
     if session["usertype"] == 'admin':
         return render_template("registerteacher.html")
