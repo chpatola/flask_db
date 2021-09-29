@@ -1,5 +1,6 @@
 import os
 import sql_queries as queries
+import error_texts as errortext
 from flask import Flask
 from flask import redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
@@ -47,13 +48,16 @@ def addcourse():
     room = request.form["room"]
 
     if session["usertype"] == 'admin':
-        sql = queries.add_course
-        db.session.execute(sql, {
-            "name": name, "startdate": startdate, "enddate": enddate, "time": time, "duration": duration, "occurances": occurances, "price": price, "teacher_id": teacher, "room_id": room})
-        db.session.commit()
-        return redirect("/")
+        try:
+            sql = queries.add_course
+            db.session.execute(sql, {
+                "name": name, "startdate": startdate, "enddate": enddate, "time": time, "duration": duration, "occurances": occurances, "price": price, "teacher_id": teacher, "room_id": room})
+            db.session.commit()
+            return redirect("/")
+        except:
+            return render_template("error.html", errortext=errortext.incorrect_input)    
     else: 
-        return redirect("/error")    
+        return render_template("error.html",errortext=errortext.access_missing)     
 
 
 @app.route("/addteacher", methods=["POST"])
@@ -64,13 +68,17 @@ def addteacher():
     email = request.form["email"]
     hourlysalary = request.form["hourlysalary"]
     if session["usertype"] == 'admin':
-        sql = queries.add_teacher
-        db.session.execute(sql, {"firstname": firstname, "lastname": lastname,
-                                "phone": phone, "email": email, "hourlysalary": hourlysalary})
-        db.session.commit()
-        return redirect("/teachers")
+        try:
+            sql = queries.add_teacher
+            db.session.execute(sql, {"firstname": firstname, "lastname": lastname,
+                                    "phone": phone, "email": email, "hourlysalary": hourlysalary})
+            db.session.commit()
+            return redirect("/teachers")
+        except:
+            return render_template("error.html",errortext=errortext.incorrect_input)
+
     else:
-        return redirect("/error")
+        return render_template("error.html",errortext=errortext.access_missing) 
 
 @app.route("/adduser", methods=["POST"])
 def adduser():
@@ -82,16 +90,17 @@ def adduser():
     bornyear = request.form["bornyear"]
 
     hash_value = generate_password_hash(password)
-
-    session["firstname"] = firstname
-    session["username"] = username
-    session["usertype"] = 'student'
-    sql = queries.add_user
-    db.session.execute(sql, {"username": username, "password": hash_value, "firstname": firstname, "lastname": lastname,
-                             "phone": phone, "bornyear": bornyear, "usertype": "student", "removed": False})
-    db.session.commit()
-    return redirect("/")
-
+    try:
+        session["firstname"] = firstname
+        session["username"] = username
+        session["usertype"] = 'student'
+        sql = queries.add_user
+        db.session.execute(sql, {"username": username, "password": hash_value, "firstname": firstname, "lastname": lastname,
+                                "phone": phone, "bornyear": bornyear, "usertype": "student", "removed": False})
+        db.session.commit()
+        return redirect("/")
+    except:
+        return render_template("error",errortext=errortext.incorrect_input)
 
 @app.route("/disenrolcourse/<int:id>")
 def disenrolcourse(id):
@@ -101,39 +110,48 @@ def disenrolcourse(id):
         db.session.commit()
         return redirect("/")
     else:
-        return redirect("/error")    
+        return render_template("error.html",errortext=errortext.access_missing)    
 
 
 @app.route("/edituser", methods=["POST"])
 def edituser():
-    sql = queries.find_user
-    result = db.session.execute(sql, {"username": session["username"]})
-    user = result.fetchone()
+    if session["username"]:
+        sql = queries.find_user
+        result = db.session.execute(sql, {"username": session["username"]})
+        user = result.fetchone()
 
-    password = request.form["password"]
-    newpassword = request.form["newpassword"]
-    firstname = request.form["firstname"]
-    lastname = request.form["lastname"]
-    phone = request.form["phone"]
-    bornyear = request.form["bornyear"]
+        password = request.form["password"]
+        newpassword = request.form["newpassword"]
+        firstname = request.form["firstname"]
+        lastname = request.form["lastname"]
+        phone = request.form["phone"]
+        bornyear = request.form["bornyear"]
 
-    if check_password_hash(user.password, password):
-        if len(newpassword) > 3:
-            hash_value = generate_password_hash(newpassword)
-            sql = queries.edit_userpsw
-            db.session.execute(sql,
-                               {"username": session["username"], "firstname": firstname, "lastname": lastname, "phone": phone, "bornyear": bornyear, "newpassword": hash_value})
-            db.session.commit()
-            return redirect("/userprofile")
+        if check_password_hash(user.password, password):
+            if len(newpassword) > 3:
+                try:
+                    hash_value = generate_password_hash(newpassword)
+                    sql = queries.edit_userpsw
+                    db.session.execute(sql,
+                                    {"username": session["username"], "firstname": firstname, "lastname": lastname, "phone": phone, "bornyear": bornyear, "newpassword": hash_value})
+                    db.session.commit()
+                    return redirect("/userprofile")
+                except:
+                    return render_template("error.html", errortext=errortext.incorrect_input)    
+            else:
+                try:
+                    sql = queries.edit_user
+                    print(sql)
+                    db.session.execute(sql, {"username": session["username"], "firstname": firstname,
+                                            "lastname": lastname, "phone": phone, "bornyear": bornyear})
+                    db.session.commit()
+                    return redirect("/userprofile")
+                except:
+                    return render_template("error.html", errortext=errortext.incorrect_input)     
         else:
-            sql = queries.edit_user
-            print(sql)
-            db.session.execute(sql, {"username": session["username"], "firstname": firstname,
-                                     "lastname": lastname, "phone": phone, "bornyear": bornyear})
-            db.session.commit()
-            return redirect("/userprofile")
+            return render_template("error.html",errortext=errortext.login_error) 
     else:
-        return redirect("/error")
+        return render_template("error.html",errortext=errortext.access_missing)
 
 
 @app.route("/enrolcourse/<int:id>")
@@ -143,7 +161,7 @@ def enrolcourse(id):
         sql, {"username": session["username"], "id": id})
     registrated = result.fetchone()
     if registrated[0] > 0:
-        return redirect("/error")
+        return render_template("error.html",errortext=errortext.already_registered)
     else:
         sql = queries.enrol_course
         db.session.execute(sql, {"username": session["username"], "id": id})
@@ -162,11 +180,6 @@ def enrolledstudents(id):
         return redirect("/")    
 
 
-@app.route("/error")
-def error():
-    return render_template("error.html")
-
-
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
@@ -176,7 +189,7 @@ def login():
     result = db.session.execute(sql, {"username": username})
     user = result.fetchone()
     if not user:
-        return redirect("/error")
+        return render_template("error.html",errortext=errortext.login_error) 
     else:
         hash_value = user.password
         # the latter is the plaintext version
@@ -187,7 +200,7 @@ def login():
             session["usertype"] = user.usertype  # here we set the session info
             return redirect("/")
         else:
-            return redirect("/error")
+            return render_template("error.html",errortext=errortext.login_error)
 
 
 @app.route("/logout", methods=["POST", "GET"])
@@ -210,14 +223,14 @@ def registercourse():
         rooms = result_rooms.fetchall()
         return render_template("registercourse.html", rooms=rooms, teachers=teachers)
     else:
-        return redirect("/")
+        return render_template("error.html",errortext=errortext.access_missing)  
 
 @app.route("/registerteacher",methods=["POST"])
 def registerteacher():
     if session["usertype"] == 'admin':
         return render_template("registerteacher.html")
     else:
-        return redirect("/error")    
+        return render_template("error.html",errortext=errortext.access_missing)    
 
 
 @app.route("/registeruser", methods=["POST"])
@@ -232,31 +245,33 @@ def removecourse(id):
         result = db.session.execute(sql, {"id": id})
         enrolled_users = result.fetchall()
         if len(enrolled_users) > 0:
-            return redirect("/error")
+            return render_template("error.html",errortext=errortext.course_has_students)  
         else:
             sql = queries.remove_course
             db.session.execute(sql, {"id": id})
             db.session.commit()
             return redirect("/")
     else:
-        return redirect("/error")
+        return render_template("error.html",errortext=errortext.access_missing)  
 
 
 
 @app.route("/removeuser")
 def removeuser():
-    sql_users_courses = queries.check_users_courses
-    result_users_course = db.session.execute(
-        sql_users_courses, {"username": session["username"]})
-    users_courses = result_users_course.fetchone()
-    if users_courses[0] > 0:
-        return redirect("/error")
+    if session["username"]:
+        sql_users_courses = queries.check_users_courses
+        result_users_course = db.session.execute(
+            sql_users_courses, {"username": session["username"]})
+        users_courses = result_users_course.fetchone()
+        if users_courses[0] > 0:
+            return render_template("error.html",errortext=errortext.account_remove_error)  
+        else:
+            sql_remove = queries.remove_user
+            db.session.execute(sql_remove, {"username": session["username"]})
+            db.session.commit()
+            return redirect("/logout")
     else:
-        sql_remove = queries.remove_user
-        db.session.execute(sql_remove, {"username": session["username"]})
-        db.session.commit()
-        return redirect("/logout")
-
+        return render_template("error.html",errortext=errortext.access_missing)  
 
 @app.route("/rooms")
 def rooms():
@@ -266,7 +281,7 @@ def rooms():
         rooms = result.fetchall()
         return render_template("rooms.html", rooms=rooms)
     else:
-        return redirect("/error")
+        return render_template("error.html",errortext=errortext.access_missing)  
 
 @app.route("/teachers")
 def teachers():
@@ -276,12 +291,14 @@ def teachers():
         teachers = result.fetchall()
         return render_template("teachers.html", teachers=teachers)
     else:
-        return redirect("/error")
+        return render_template("error.html",errortext=errortext.access_missing)  
 
 @app.route("/userprofile")
 def userprofile():
-    sql = queries.userdata
-    result = db.session.execute(sql, {"username": session["username"]})
-    userdata = result.fetchone()
-    print(userdata)
-    return render_template("userprofile.html", userdata=userdata)
+    if session["username"]:
+        sql = queries.userdata
+        result = db.session.execute(sql, {"username": session["username"]})
+        userdata = result.fetchone()
+        return render_template("userprofile.html", userdata=userdata)
+    else:
+        return render_template("error.html",errortext=errortext.access_missing)

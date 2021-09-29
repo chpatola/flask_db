@@ -52,6 +52,10 @@
   background-color: white; 
 }
 
+.error{
+  color: red;
+}
+
 /* Style footer content */
 .footer {
     margin-left: 310px; /* Same as the width of the sidebar */
