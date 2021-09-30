@@ -20,11 +20,13 @@ student12@student.com & <3aidadance
 4. create an .env file with DATABASE_URL and SECRET_KEY
 5. Run the setup file (I need to fix that!) and open the local version of the app in http://127.0.0.1:5000/ 
 
-### Publish on Heroku
+### Publish to Heroku
 1. Create a free account at Heroku
 2. Create a new app with a name of your choice
 3. Provision postgres database in heroku
 .... (More to come)
+
+## Functionality and Database Structure
 
 ### Main functionality for Students
  * See an overview of upcoming courses 
@@ -50,6 +52,8 @@ student12@student.com & <3aidadance
  * COURSES((pk) id:serial, startdate:date, finishdate:date,time:time, durationhour:float, occurances:int, (fk) teacherid -> Teachers, (fk) roomid -> Rooms)
  * COURSESENROLMENT((pk) id:serial, (fk) courseid -> Courses,(fk) userid -> Users - On delete set null)
  
-## Progression 26.9
+## Progression Diary
+ 
+### Progression 26.9
 The base functionality of the application is almost finished. What is missing is the admin's ability to delete a course. After that is set up, I will improve the stability of the app (validating input, error catching).
 

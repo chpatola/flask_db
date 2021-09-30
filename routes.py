@@ -26,6 +26,7 @@ def index():
         sql_ongoing = queries.courses_ongoing
         result_ongoing = db.session.execute(sql_ongoing)
         courses_ongoing = result_ongoing.fetchall()
+        print(courses_ongoing)
         return render_template("index.html", courses_ongoing=courses_ongoing, courses_upcoming=courses_upcoming, courses_user=courses_user, today=date.today())
     return render_template("index.html", courses_upcoming=courses_upcoming)
 
