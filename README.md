@@ -18,7 +18,23 @@ student12@student.com & <3aidadance
 2. Download pg-install.sh from https://github.com/hy-tsoha/local-pg and run it according to the instructions
 3. cd into the folder for this repo
 4. create an .env file with DATABASE_URL and SECRET_KEY
-5. Run the setup file (I need to fix that!) and open the local version of the app in http://127.0.0.1:5000/ 
+5. Create a virtual environment for this project ( I use conda) and install the required packages (I use pip):
+``` 
+conda create --name <yourname>
+conda activate <yourname>
+pip install -r requirements.txt
+
+```
+6. Start the database:
+```
+start-pg.sh
+```
+7. Open a new terminal and populate the database with the default tables and base data:
+```
+heroku psql < db_setup.sql
+```
+
+. Run the setup file (I need to fix that!) and open the local version of the app in http://127.0.0.1:5000/ 
 
 ### Publish to Heroku
 1. Create a free account at Heroku
