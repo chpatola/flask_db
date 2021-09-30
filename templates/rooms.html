@@ -4,16 +4,23 @@
 
 {% block content %}
 <h2>Our dance rooms</h2>
+<table>
+    <tr>
+        <th>Name </th>
+        <th>ID </th>
+        <th>M2 </th>
+        <th>Capacity (excl. teacher) </th>
+    </tr>
+    {% for room in rooms %}
+    <tr>
+        <td>{{room.name}}</td>
+        <td>{{room.id}}</td>
+        <td>{{ room.m2}}</td>
+        <td>{{room.capacity}}</td>
+    </tr>
+    {% endfor %}
 
-{% for room in rooms %}
 
-    <strong>{{room.name}}</strong> | 
-     id: {{ room.id }} | 
-     m2: {{ room.m2 }} | 
-     capacity (excl. teacher): {{room.capacity}} 
-    <br>
-    <br>
-
-{% endfor %}
+</table>
 
 {% endblock %}

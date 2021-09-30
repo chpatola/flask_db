@@ -8,18 +8,26 @@
     <input type="submit" value="Add teacher">
     </form>
 <h2>Our dance teachers</h2>
-
-{% for teacher in teachers %}
-
-    <strong>ID</strong> {{ teacher.id }} 
-    <strong>Last name:</strong> {{teacher.lastname }}
-    <strong>First name:</strong> {{teacher.firstname }} 
-    <strong>Phone:</strong> {{teacher.phone }} 
-    <strong>Email:</strong> {{teacher.email }}
-    <strong>Salary € / h:</strong> {{teacher.hourlysalary }} 
-    <br>
-    <br>
-
-{% endfor %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Last name</th>
+        <th>First name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Salary € / h</th>
+    </tr>
+    {% for teacher in teachers %}
+        <tr>
+            <td>{{ teacher.id }} </td>
+            <td>{{teacher.lastname }}</td>
+            <td>{{teacher.firstname }} </td>
+            <td>{{teacher.phone }} </td>
+            <td>{{teacher.email }}</td>
+            <td>{{teacher.hourlysalary }}</td>
+        </tr>
+    {% endfor %}
+    
+</table>
 
 {% endblock %}
