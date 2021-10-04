@@ -1,11 +1,9 @@
 {% extends "layout.html" %}
 
 {% block title %}Enrolled students{% endblock %}
-
 {% block content %}
 
 <h2>Students at course {{id}}:</h2>
-
 {% for student in enrolled_users %}
 
     <strong>Username</strong> {{ student.username }} 

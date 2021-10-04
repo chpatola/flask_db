@@ -4,18 +4,25 @@
 {% block content %}
 <h2>Please fill in the teacher's information below</h2>
 <form action="/addteacher" method="POST">
-
-    <p>First name:<br>
-    <input type="text" name="firstname" required minlength="1" maxlength="99" class="textfields" ></p>
-    <p>Last name:<br>
-    <input type="text" name="lastname" required minlength="1" maxlength="99"class="textfields" ></p>
-    <p>Phone:<br>
-    <input type="tel" name="phone" minlength="6" maxlength="30" class="textfields" ></p>
-    <p>Email:<br>
-    <input type="email" name="email" required maxlength="99" class="textfields" > </p>
-    <p>Salary € / h:<br>
-    <input type="number" name="hourlysalary" required minlength="1" max=1000 class="textfields" ></p> 
-    <input type="submit" value="Add teacher">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    </form>
+	<p>First name:
+		<br>
+		<input type="text" name="firstname" required minlength="1" maxlength="99" class="textfields">
+	</p>
+	<p>Last name:
+		<br>
+		<input type="text" name="lastname" required minlength="1" maxlength="99" class="textfields">
+	</p>
+	<p>Phone:
+		<br>
+		<input type="tel" name="phone" minlength="6" maxlength="30" class="textfields">
+	</p>
+	<p>Email:
+		<br>
+		<input type="email" name="email" required maxlength="99" class="textfields"> </p>
+	<p>Salary € / h:
+		<br>
+		<input type="number" name="hourlysalary" required minlength="1" max=1000 class="textfields">
+	</p>
+	<input type="submit" value="Add teacher">
+	<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"> </form>
 {% endblock %}
