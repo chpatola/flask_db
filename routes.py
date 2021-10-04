@@ -38,6 +38,8 @@ def addcourse():
     price = request.form["price"]
     teacher = request.form["teacher"]
     room = request.form["room"]
+    if startdate > enddate:
+        return render_template("error.html", errortext=errortext.incorrect_timespan)      
     if session["usertype"] == 'admin':
         try:
             db.session.execute(queries.add_course, {
