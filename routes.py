@@ -13,20 +13,13 @@ from datetime import date
 
 @app.route("/")
 def index():
-    sql_upcoming = queries.courses_upcoming
-    result_upcoming = db.session.execute(sql_upcoming)
-    courses_upcoming = result_upcoming.fetchall()
+    courses_upcoming = db.session.execute(queries.courses_upcoming).fetchall()
 
     if session.get("firstname"):
-        sql_user = queries.courses_user
-        result_user = db.session.execute(
-            sql_user, {"user_id": session["username"]})
-        courses_user = result_user.fetchall()
 
-        sql_ongoing = queries.courses_ongoing
-        result_ongoing = db.session.execute(sql_ongoing)
-        courses_ongoing = result_ongoing.fetchall()
-        print(courses_ongoing)
+        courses_user = db.session.execute(
+            queries.courses_user, {"user_id": session["username"]}).fetchall()
+        courses_ongoing = db.session.execute(queries.courses_ongoing).fetchall()
         return render_template("index.html", courses_ongoing=courses_ongoing, courses_upcoming=courses_upcoming, courses_user=courses_user, today=date.today())
     return render_template("index.html", courses_upcoming=courses_upcoming)
 
@@ -47,8 +40,7 @@ def addcourse():
 
     if session["usertype"] == 'admin':
         try:
-            sql = queries.add_course
-            db.session.execute(sql, {
+            db.session.execute(queries.add_course, {
                 "name": name, "startdate": startdate, "enddate": enddate, "time": time, "duration": duration, "occurances": occurances, "price": price, "teacher_id": teacher, "room_id": room})
             db.session.commit()
             return redirect("/")
@@ -69,8 +61,7 @@ def addteacher():
     hourlysalary = request.form["hourlysalary"]
     if session["usertype"] == 'admin':
         try:
-            sql = queries.add_teacher
-            db.session.execute(sql, {"firstname": firstname, "lastname": lastname,
+            db.session.execute(queries.add_teacher, {"firstname": firstname, "lastname": lastname,
                                     "phone": phone, "email": email, "hourlysalary": hourlysalary})
             db.session.commit()
             return redirect("/teachers")
@@ -96,8 +87,7 @@ def adduser():
         session["usertype"] = 'student'
         session["csrf_token"] = secrets.token_hex(16)
         print(session["csrf_token"])
-        sql = queries.add_user
-        db.session.execute(sql, {"username": username, "password": hash_value, "firstname": firstname, "lastname": lastname,
+        db.session.execute(queries.add_user, {"username": username, "password": hash_value, "firstname": firstname, "lastname": lastname,
                                 "phone": phone, "bornyear": bornyear, "usertype": "student", "removed": False})
         db.session.commit()
         return redirect("/")
@@ -107,8 +97,7 @@ def adduser():
 @app.route("/disenrolcourse/<int:id>")
 def disenrolcourse(id):
     if session["username"]:
-        sql = queries.disenrol_course
-        db.session.execute(sql, {"username": session["username"], "id": id})
+        db.session.execute(queries.disenrol_course, {"username": session["username"], "id": id})
         db.session.commit()
         return redirect("/")
     else:
@@ -118,9 +107,7 @@ def disenrolcourse(id):
 @app.route("/edituser", methods=["POST"])
 def edituser():
     if session["username"]:
-        sql = queries.find_user
-        result = db.session.execute(sql, {"username": session["username"]})
-        user = result.fetchone()
+        user = db.session.execute(queries.find_user, {"username": session["username"]}).fetchone()
 
         password = request.form["password"]
         newpassword = request.form["newpassword"]
@@ -133,8 +120,7 @@ def edituser():
             if len(newpassword) > 3:
                 try:
                     hash_value = generate_password_hash(newpassword)
-                    sql = queries.edit_userpsw
-                    db.session.execute(sql,
+                    db.session.execute(queries.edit_userpsw,
                                     {"username": session["username"], "firstname": firstname, "lastname": lastname, "phone": phone, "bornyear": bornyear, "newpassword": hash_value})
                     db.session.commit()
                     return redirect("/userprofile")
@@ -142,9 +128,7 @@ def edituser():
                     return render_template("error.html", errortext=errortext.incorrect_input)    
             else:
                 try:
-                    sql = queries.edit_user
-                    print(sql)
-                    db.session.execute(sql, {"username": session["username"], "firstname": firstname,
+                    db.session.execute(queries.edit_user, {"username": session["username"], "firstname": firstname,
                                             "lastname": lastname, "phone": phone, "bornyear": bornyear})
                     db.session.commit()
                     return redirect("/userprofile")
@@ -158,38 +142,29 @@ def edituser():
 
 @app.route("/enrolcourse/<int:id>")
 def enrolcourse(id):
-    sql = queries.check_users_course
-    result = db.session.execute(
-        sql, {"username": session["username"], "id": id})
-    registrated = result.fetchone()
+    registrated = db.session.execute(
+        queries.check_users_course, {"username": session["username"], "id": id}).fetchone()
     if registrated[0] > 0:
         return render_template("error.html",errortext=errortext.already_registered)
     else:
-        sql = queries.enrol_course
-        db.session.execute(sql, {"username": session["username"], "id": id})
+        db.session.execute(queries.enrol_course, {"username": session["username"], "id": id})
         db.session.commit()
         return redirect("/")
-
 
 @app.route("/enrolledstudents/<int:id>")
 def enrolledstudents(id):
     if session["usertype"] == 'admin':
-        sql = queries.users_course
-        result = db.session.execute(sql, {"id": id})
-        enrolled_users = result.fetchall()
+        enrolled_users = db.session.execute(queries.users_course, {"id": id}).fetchall()
         return render_template("enrolledstudents.html", enrolled_users=enrolled_users, id=id)
     else:
         return redirect("/")    
-
 
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    sql = queries.find_user
-    result = db.session.execute(sql, {"username": username})
-    user = result.fetchone()
+    user = db.session.execute(queries.find_user, {"username": username}).fetchone()
     if not user:
         return render_template("error.html",errortext=errortext.login_error) 
     else:
@@ -218,13 +193,8 @@ def logout():
 @app.route("/registercourse",methods=["POST"])
 def registercourse():
     if session["usertype"] == 'admin':
-        sql_teachers = queries.teachers
-        result_teachers = db.session.execute(sql_teachers)
-        teachers = result_teachers.fetchall()
-
-        sql_rooms = queries.rooms
-        result_rooms = db.session.execute(sql_rooms)
-        rooms = result_rooms.fetchall()
+        teachers = db.session.execute(queries.teachers).fetchall()
+        rooms = db.session.execute(queries.rooms).fetchall()
         return render_template("registercourse.html", rooms=rooms, teachers=teachers)
     else:
         return render_template("error.html",errortext=errortext.access_missing)  
@@ -245,33 +215,26 @@ def registeruser():
 @app.route("/removecourse/<int:id>")
 def removecourse(id):
     if session["usertype"] == 'admin':
-        sql = queries.users_course
-        result = db.session.execute(sql, {"id": id})
-        enrolled_users = result.fetchall()
+        enrolled_users = db.session.execute(queries.users_course, {"id": id}).fetchall()
         if len(enrolled_users) > 0:
             return render_template("error.html",errortext=errortext.course_has_students)  
         else:
-            sql = queries.remove_course
-            db.session.execute(sql, {"id": id})
+            db.session.execute(queries.remove_course, {"id": id})
             db.session.commit()
             return redirect("/")
     else:
         return render_template("error.html",errortext=errortext.access_missing)  
 
 
-
 @app.route("/removeuser")
 def removeuser():
     if session["username"]:
-        sql_users_courses = queries.check_users_courses
-        result_users_course = db.session.execute(
-            sql_users_courses, {"username": session["username"]})
-        users_courses = result_users_course.fetchone()
+        users_courses = db.session.execute(
+            queries.check_users_courses, {"username": session["username"]}).fetchone()
         if users_courses[0] > 0:
             return render_template("error.html",errortext=errortext.account_remove_error)  
         else:
-            sql_remove = queries.remove_user
-            db.session.execute(sql_remove, {"username": session["username"]})
+            db.session.execute(queries.remove_user, {"username": session["username"]})
             db.session.commit()
             return redirect("/logout")
     else:
@@ -280,9 +243,7 @@ def removeuser():
 @app.route("/rooms")
 def rooms():
     if session["usertype"] == 'admin':
-        sql = queries.rooms
-        result = db.session.execute(sql)
-        rooms = result.fetchall()
+        rooms = db.session.execute(queries.rooms).fetchall()
         return render_template("rooms.html", rooms=rooms)
     else:
         return render_template("error.html",errortext=errortext.access_missing)  
@@ -290,9 +251,7 @@ def rooms():
 @app.route("/teachers")
 def teachers():
     if session["usertype"] == 'admin':
-        sql = queries.teachers
-        result = db.session.execute(sql)
-        teachers = result.fetchall()
+        teachers = db.session.execute(queries.teachers).fetchall()
         return render_template("teachers.html", teachers=teachers)
     else:
         return render_template("error.html",errortext=errortext.access_missing)  
@@ -300,9 +259,7 @@ def teachers():
 @app.route("/userprofile")
 def userprofile():
     if session["username"]:
-        sql = queries.userdata
-        result = db.session.execute(sql, {"username": session["username"]})
-        userdata = result.fetchone()
+        userdata = db.session.execute(queries.userdata, {"username": session["username"]}).fetchone()
         return render_template("userprofile.html", userdata=userdata)
     else:
         return render_template("error.html",errortext=errortext.access_missing)
