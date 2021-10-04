@@ -23,7 +23,6 @@ def index():
         return render_template("index.html", courses_ongoing=courses_ongoing, courses_upcoming=courses_upcoming, courses_user=courses_user, today=date.today())
     return render_template("index.html", courses_upcoming=courses_upcoming)
 
-
 @app.route("/addcourse", methods=["POST"])
 def addcourse():
     if session["csrf_token"] != request.form["csrf_token"]:
@@ -49,7 +48,6 @@ def addcourse():
     else: 
         return render_template("error.html",errortext=errortext.access_missing)     
 
-
 @app.route("/addteacher", methods=["POST"])
 def addteacher():
     if session["csrf_token"] != request.form["csrf_token"]:
@@ -73,7 +71,7 @@ def addteacher():
 
 @app.route("/adduser", methods=["POST"])
 def adduser():
-    username = request.form["username"]
+    username = request.form["username"].lower()
     password = request.form["password"]
     firstname = request.form["firstname"]
     lastname = request.form["lastname"]
@@ -102,7 +100,6 @@ def disenrolcourse(id):
         return redirect("/")
     else:
         return render_template("error.html",errortext=errortext.access_missing)    
-
 
 @app.route("/edituser", methods=["POST"])
 def edituser():
@@ -139,7 +136,6 @@ def edituser():
     else:
         return render_template("error.html",errortext=errortext.access_missing)
 
-
 @app.route("/enrolcourse/<int:id>")
 def enrolcourse(id):
     registrated = db.session.execute(
@@ -161,7 +157,7 @@ def enrolledstudents(id):
 
 @app.route("/login", methods=["POST"])
 def login():
-    username = request.form["username"]
+    username = request.form["username"].lower()
     password = request.form["password"]
 
     user = db.session.execute(queries.find_user, {"username": username}).fetchone()
@@ -180,7 +176,6 @@ def login():
         else:
             return render_template("error.html",errortext=errortext.login_error)
 
-
 @app.route("/logout", methods=["POST", "GET"])
 def logout():
     del session["firstname"]  # here we remove the session info
@@ -188,7 +183,6 @@ def logout():
     del session["usertype"]
     del session["csrf_token"]
     return redirect("/")
-
 
 @app.route("/registercourse",methods=["POST"])
 def registercourse():
@@ -206,11 +200,9 @@ def registerteacher():
     else:
         return render_template("error.html",errortext=errortext.access_missing)    
 
-
 @app.route("/registeruser", methods=["POST"])
 def registeruser():
     return render_template("registeruser.html")
-
 
 @app.route("/removecourse/<int:id>")
 def removecourse(id):
@@ -224,7 +216,6 @@ def removecourse(id):
             return redirect("/")
     else:
         return render_template("error.html",errortext=errortext.access_missing)  
-
 
 @app.route("/removeuser")
 def removeuser():
