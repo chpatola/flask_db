@@ -101,3 +101,6 @@ git push heroku main
 The base functionality of the application is almost finished. What is missing is the admin's ability to delete a course. After that is set up, I will improve the stability of the app (validating input, error catching).
 
 ### Progression 10.10
+All base functionality is now in place. I have also added access control to the routes and implemented error handling. The layout is also more complete and I have diveded the code into files and impoved the code style.
+In my opinion, the app is now almost finished. I await feedback and will do the last finished up after that.
+Instructions for where and how to test the app is found on the top of this Readme file.
