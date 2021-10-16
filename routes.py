@@ -84,7 +84,6 @@ def adduser():
         session["username"] = username
         session["usertype"] = 'student'
         session["csrf_token"] = secrets.token_hex(16)
-        print(session["csrf_token"])
         db.session.execute(queries.add_user, {"username": username, "password": hash_value, "firstname": firstname,
                                               "lastname": lastname,"phone": phone, "bornyear": bornyear, "usertype": "student",
                                               "removed": False})

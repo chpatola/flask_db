@@ -4,15 +4,24 @@
 {% block content %}
 
 <h2>Students at course {{id}}:</h2>
-{% for student in enrolled_users %}
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Last name</th>
+        <th>First name</th>
+        <th>Phone</th>
+        <th>Born Year</th>
+    </tr>
+    {% for student in enrolled_users %}
+    <tr>
+        <td>{{ student.username}}</td>
+        <td>{{student.lastname}}</td>
+        <td>{{student.firstname}}</td>
+        <td>{{student.phone}} </td>
+        <td>{{student.bornyear}}</td>
+    </tr>
+    {% endfor %}
 
-    <strong>Username</strong> {{ student.username }} 
-    <strong>Last name:</strong> {{student.lastname }}
-    <strong>First name:</strong> {{student.firstname }} 
-    <strong>Phone:</strong> {{student.phone }} 
-    <strong>Born Year:</strong> {{student.bornyear }}
-    <br> 
-
-{% endfor %}
+</table>
 
 {% endblock %}
