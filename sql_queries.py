@@ -41,7 +41,7 @@ disenrol_course = "DELETE FROM COURSEENROLMENTS WHERE USER_ID=:username AND COUR
 edit_user = "UPDATE USERS SET FIRSTNAME=:firstname, LASTNAME=:lastname,PHONE=:phone,BORNYEAR=:bornyear"\
    " WHERE USERNAME=:username"
 
-edit_userpsw = "UPDATE USERS SET PASSWORD=:newpassword, FIRSTNAME=:firstname, LASTNAME=:lastname,PHONE=:phone,BORNYEAR=:bornyear"\
+edit_user_new_psw = "UPDATE USERS SET PASSWORD=:newpassword, FIRSTNAME=:firstname, LASTNAME=:lastname,PHONE=:phone,BORNYEAR=:bornyear"\
    " WHERE USERNAME=:username"
 
 enrol_course = "INSERT INTO COURSEENROLMENTS (COURSE_ID, USER_ID) VALUES (:id, :username)"
