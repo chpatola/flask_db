@@ -1,4 +1,5 @@
 """SQL queries used by routes.py"""
+
 add_course = "INSERT INTO courses (NAME, STARTDATE, ENDDATE, TIME, OCCURANCES, DURATIONHOUR, PRICE, TEACHER_ID, ROOM_ID)"\
    " VALUES (:name, :startdate, :enddate, :time, :occurances, :duration, :price, :teacher_id, :room_id)" 
 
