@@ -104,3 +104,7 @@ The base functionality of the application is almost finished. What is missing is
 All base functionality is now in place. I have also added access control to the routes and implemented error handling. The layout is also more complete and I have divided the code into files and impoved the code style.
 In my opinion, the app is now almost finished. I await feedback and will do the last finish up after that.
 Instructions for where and how to test the app is found on the top of this Readme file.
+
+### Progression 24.10 (Final)
+I have modularized the app furthermore, fixed the reported duplicate username crash problem (https://github.com/chpatola/flask_db/issues/2) and tidied up the code.
+Instructions for where and how to test the app is found on the top of this Readme file.
